@@ -3,4 +3,6 @@
     <string name="nombreEntrenador">Nombre</string>
     <string name="subTitulo">Coach</string>
     <string name="detalles">Detalles</string>
+    <string name="txtCardPortada">subtitulo</string>
+
 </resources>

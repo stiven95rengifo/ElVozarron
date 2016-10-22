@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/portada_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.uniquindio.android.electiva.elvozarron.activity.PortadaActivity">
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardViewEntrenadores"
+        android:layout_width="match_parent"
+        android:layout_height="245dp"
+        android:background="@drawable/marco_portada"
+        android:padding="8dp"
+        android:layout_marginEnd="6dp"
+        app:cardBackgroundColor="@color/vinotinto"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="9dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/marco_portada">
+
+            <ImageView
+                android:id="@+id/idImagePortada"
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp" />
+
+            <TextView
+                android:id="@+id/idTxtPortada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/idImagePortada"
+                android:layout_below="@id/idImagePortada"
+                android:layout_marginRight="10dp"
+                android:paddingTop="6dp"
+                android:text="@string/txtCardPortada"
+                android:textColor="#ffffff"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardViewParticipantes"
+        android:layout_width="170dp"
+        android:layout_height="290dp"
+        android:layout_below="@id/cardViewEntrenadores"
+     android:layout_marginTop="6dp"
+        android:background="@drawable/marco_portada"
+        android:paddingTop="8dp"
+        app:cardBackgroundColor="@color/vinotinto"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="9dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/marco_portada">
+
+            <ImageView
+                android:id="@+id/idImagePortadaEntrenadores"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp" />
+
+            <TextView
+                android:id="@+id/idTxtPortadaEntrenadores"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/idImagePortadaEntrenadores"
+                android:layout_below="@id/idImagePortadaEntrenadores"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:paddingTop="6dp"
+                android:text="@string/txtCardPortada"
+                android:textColor="#ffffff"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardViewVotacion"
+        android:layout_width="170dp"
+        android:layout_height="290dp"
+        android:layout_below="@id/cardViewEntrenadores"
+        android:layout_alignRight="@id/cardViewEntrenadores"
+         android:background="@drawable/marco_portada"
+        android:padding="8dp"
+        android:layout_marginTop="6dp"
+        app:cardBackgroundColor="@color/vinotinto"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="9dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/marco_portada">
+
+            <ImageView
+                android:id="@+id/idImagePortadaVotacion"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp" />
+
+            <TextView
+                android:id="@+id/idTxtPortadaVotacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/idImagePortadaVotacion"
+                android:layout_below="@id/idImagePortadaVotacion"
+                android:layout_marginRight="10dp"
+                android:paddingTop="6dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/txtCardPortada"
+                android:textColor="#ffffff"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

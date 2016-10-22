@@ -42,16 +42,15 @@ public class Entrenador {
     /**
      * Constructor de la clase
      *
-     * @param id        del entrenador
-     * @param nombre    del entrenador
-     * @param genero    del entrenador
-     * @param historial del entrenador
+     * @param id     del entrenador
+     * @param nombre del entrenador
+     * @param genero del entrenador
      */
-    public Entrenador(String id, String nombre, String genero, String historial) {
+    public Entrenador(String id, String nombre, String genero,int imagen) {
         this.id = id;
         this.nombre = nombre;
         this.genero = genero;
-        this.historial = historial;
+        this.foto=imagen;
     }
 
 

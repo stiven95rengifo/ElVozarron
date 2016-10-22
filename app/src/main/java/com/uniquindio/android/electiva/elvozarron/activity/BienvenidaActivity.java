@@ -1,5 +1,6 @@
 package com.uniquindio.android.electiva.elvozarron.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -45,6 +46,7 @@ public class BienvenidaActivity extends AppCompatActivity {
 
         if (progreso == 110) {
             finish();
+            startActivity(new Intent(this,PortadaActivity.class));
         } else {
 
             progressBar.setProgress(progreso);
