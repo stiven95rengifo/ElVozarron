@@ -9,6 +9,8 @@ import com.uniquindio.android.electiva.elvozarron.R;
 import com.uniquindio.android.electiva.elvozarron.util.AdaptadorDeEntrenador;
 
 /**
+ * Actividad EntrenadorActivity la cual permite mostrar los entrenadores por medio del recyclerview
+ *
  * @author Stiven Alejandro Rengifo Ospina
  * @author Cristian Camilo Tellez
  * @version 1.0

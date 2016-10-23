@@ -2,7 +2,263 @@ package com.uniquindio.android.electiva.elvozarron.vo;
 
 /**
  * Created by Stiven on 17/10/2016.
+ * Clase Participante con sus atributos
+ *
+ * @author Stiven Alejandro Rengifo Ospina
+ * @author Cristian Camilo Tellez
+ * @version 1.0
  */
-
 public class Participante {
+
+    /**
+     * Atributo id de la clase Participante
+     */
+    private String id;
+
+    /**
+     * Atributo nombre de la clase Participante
+     */
+    private String nombre;
+
+    /**
+     * Atributo descripcion de la clase Participante
+     */
+    private String descripcion;
+
+    /**
+     * Atributo edad de la clase Participante
+     */
+    private int edad;
+
+    /**
+     * Atributo entrenador de la clase Participante
+     */
+    private Entrenador entrenador;
+
+    /**
+     * Atributo foto de la clase Entrenador
+     */
+    private int foto;
+
+    /**
+     * Atributo tipoParticipante de la clase Participante
+     */
+    private String tipoParticipante;
+
+    /**
+     * Atributo numeroDeVotos de la clase Participante
+     */
+    private int numeroDeVotos;
+    /**
+     * Atributo url de la clase Participante
+     */
+    private String url;
+
+    /**
+     * Metodo que permite obtener el id de la foto del Entrenador
+     *
+     * @return id de la foto del entrenador
+     */
+    public int getFoto() {
+        return foto;
+    }
+
+    /**
+     * Metodo que permite modificar el id de la foto del Entrenador
+     *
+     * @param foto, id de la foto del entrenador
+     */
+    public void setFoto(int foto) {
+        this.foto = foto;
+    }
+
+    /**
+     * Atributo estado de la clase Participante
+     *
+     * El estado puede ser True=activo, False=Eliminado
+     */
+    private boolean estado;
+
+    /**
+     * Constructor de la clase Participante
+     *
+     * @param id               o cedula del participante
+     * @param nombre           del participante
+     * @param edad             del participante
+     * @param tipoParticipante la relacion se hace con la universidad, puede ser estudiante, profesor, administrativo, otros
+     * @param url              video en youtube de la persona cantando
+     */
+    public Participante(String id, String nombre, int edad, String tipoParticipante, String descripcion,int foto, String url) {
+        this.id = id;
+        this.nombre = nombre;
+        this.edad = edad;
+        this.tipoParticipante = tipoParticipante;
+        this.numeroDeVotos = 0;
+        this.url = url;
+        this.estado = true;
+        this.descripcion = descripcion;
+        this.foto=foto;
+    }
+
+    /**
+     * Permite obtener el id del participante
+     *
+     * @return id del participante
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Permite modificar el id del participante
+     *
+     * @param id por el cual va ser modificado el actual
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    /**
+     * Permite obtener el nombre del participante
+     *
+     * @return nombre del participante
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * Permite modificar el nombre del participante
+     *
+     * @param nombre por el cual va ser modificado el actual
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    /**
+     * Permite obtener la edad del participante
+     *
+     * @return edad del participante
+     */
+    public int getEdad() {
+        return edad;
+    }
+
+    /**
+     * Permite modificar la edad del participante
+     *
+     * @param edad por el cual va ser modificado el actual
+     */
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    /**
+     * Permite obtener el entrenador con el que esta relacionado el participante
+     *
+     * @return entrenador relacionado con el  participante
+     */
+    public Entrenador getEntrenador() {
+        return entrenador;
+    }
+
+    /**
+     * Permite modificar el entrenador con el que esta relacionado el participante
+     *
+     * @param entrenador relacionado con el  participante
+     */
+    public void setEntrenador(Entrenador entrenador) {
+        this.entrenador = entrenador;
+    }
+
+    /**
+     * Permite obtener el tipo de participante
+     *
+     * @return edad del participante
+     */
+    public String getTipoParticipante() {
+        return tipoParticipante;
+    }
+
+    /**
+     * Permite modificar el tipo de participante
+     *
+     * @param tipoParticipante del participante
+     */
+    public void setTipoParticipante(String tipoParticipante) {
+        this.tipoParticipante = tipoParticipante;
+    }
+
+    /**
+     * Permite obtener el numero de votos del participante
+     *
+     * @return numeroDeVotos del participante
+     */
+    public int getNumeroDeVotos() {
+        return numeroDeVotos;
+    }
+
+    /**
+     * Permite modificar el numero de votos del participante
+     *
+     * @param numeroDeVotos del participante
+     */
+    public void setNumeroDeVotos(int numeroDeVotos) {
+        this.numeroDeVotos = numeroDeVotos;
+    }
+
+    /**
+     * Permite obtener el video del participante
+     *
+     * @return url o el video del participante
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * Permite modificar el video del participante
+     *
+     * @param url o el video del participante
+     */
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    /**
+     * Permite obtener estado del participante
+     *
+     * @return estado del participante
+     */
+    public boolean isEstado() {
+        return estado;
+    }
+
+    /**
+     * Permite modificar estado del participante
+     *
+     * @param estado del participante
+     */
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    /**
+     * Permite obtener la descripcion del participante
+     *
+     * @return descripcion del participante
+     */
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    /**
+     * Permite modificar la descripcion del participante
+     *
+     * @param descripcion del participante
+     */
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 }

@@ -22,7 +22,6 @@ import java.util.ArrayList;
  * @author Stiven Alejandro Rengifo Ospina
  * @author Cristian Camilo Tellez
  * @version 1.0
- *          <p>
  *          Esta adaptador referencia a los items con objetos del tipo {@link AdaptadorViewHolder}
  */
 public class AdaptadorDeEntrenador extends RecyclerView.Adapter<AdaptadorDeEntrenador.AdaptadorViewHolder> {
@@ -51,7 +50,6 @@ public class AdaptadorDeEntrenador extends RecyclerView.Adapter<AdaptadorDeEntre
      */
     @Override
     public AdaptadorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        mostrarLog("AdaptadorOncreate", "Entro 1");
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.entrenador_cardview, parent, false);
         return new AdaptadorViewHolder(itemView);
     }
