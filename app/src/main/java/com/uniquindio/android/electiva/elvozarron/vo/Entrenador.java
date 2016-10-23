@@ -35,7 +35,14 @@ public class Entrenador {
     private int foto;
 
     /**
-     * Atributo parcipantes de la clase Entrenador
+     * Atributo descripcion de la clase Entrenador
+     */
+    private int descripcion;
+
+    /**
+     * Atributo parcipantes
+     * de la
+     * clase Entrenador
      */
     private ArrayList<Participante> participantes;
 
@@ -46,11 +53,12 @@ public class Entrenador {
      * @param nombre del entrenador
      * @param genero del entrenador
      */
-    public Entrenador(String id, String nombre, String genero,int imagen) {
+    public Entrenador(String id, String nombre, String genero, int imagen, int descripcion) {
         this.id = id;
         this.nombre = nombre;
         this.genero = genero;
-        this.foto=imagen;
+        this.foto = imagen;
+        this.descripcion = descripcion;
     }
 
 
@@ -124,6 +132,15 @@ public class Entrenador {
      */
     public void setHistorial(String historial) {
         this.historial = historial;
+    }
+
+    /**
+     * Metodo que permite obtener la descripcion del Entrenador
+     *
+     * @return descripcion del entrenador
+     */
+    public int getDescripcion() {
+        return descripcion;
     }
 
     /**

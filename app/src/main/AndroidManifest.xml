@@ -11,14 +11,16 @@
         <activity
             android:name=".activity.BienvenidaActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+
+        <activity android:name=".activity.EntrenadorActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.EntrenadorActivity" />
+
         <activity android:name=".activity.PortadaActivity"></activity>
     </application>
 

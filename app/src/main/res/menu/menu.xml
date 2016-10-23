@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_portada"
+            android:orderInCategory="1"
+            android:icon="@mipmap/ic_portada"
+            android:title="@string/menu_portada"
+
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/menu_entrenadores"
+            android:orderInCategory="2"
+            android:title="@string/menu_entrenadores"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/menu_participantes"
+            android:orderInCategory="3"
+            android:title="@string/menu_participantes"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/menu_votacion"
+            android:orderInCategory="4"
+            android:title="@string/menu_votacion"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/menu_idioma"
+            android:orderInCategory="5"
+            android:title="@string/menu_idioma"
+            app:showAsAction="never" />
+    </group>
+</menu>

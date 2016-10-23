@@ -1,12 +1,13 @@
 package com.uniquindio.android.electiva.elvozarron.activity;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.uniquindio.android.electiva.elvozarron.R;
-import com.uniquindio.android.electiva.elvozarron.util.AdaptadorDePortada;
-import com.uniquindio.android.electiva.elvozarron.vo.FuncionDeLaApp;
-
 
 
 /**
@@ -16,29 +17,32 @@ import com.uniquindio.android.electiva.elvozarron.vo.FuncionDeLaApp;
  */
 public class PortadaActivity extends AppCompatActivity {
 
-    /**
-     * Atributo adaptadorDeEntrenador de la actividad {@link PortadaActivity}
-     */
-    private AdaptadorDePortada adaptadorDePortada;
-
-    /**
-     * Atributo funcionaes de la actividad {@link PortadaActivity}
-     */
-    private FuncionDeLaApp [] funciones;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle toggle;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.portada_activity);
+        setContentView(R.layout.ventana_principal);
 
-        funciones=new FuncionDeLaApp[2];
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
-        //funciones[0]=new FuncionDeLaApp(R.drawable.imagen_entrenadores,"Entrenadores");
-        funciones[0]=new FuncionDeLaApp(R.drawable.imagen_participantes,"Participantes");
-        funciones[1]=new FuncionDeLaApp(R.drawable.imagen_votacion,"Votacion");
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+    }
 
-        adaptadorDePortada=new AdaptadorDePortada(funciones);
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(toggle.onOptionsItemSelected(item)){
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+
 
     }
 }

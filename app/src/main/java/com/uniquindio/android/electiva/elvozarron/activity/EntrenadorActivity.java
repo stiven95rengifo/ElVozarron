@@ -7,9 +7,6 @@ import android.support.v7.widget.RecyclerView;
 
 import com.uniquindio.android.electiva.elvozarron.R;
 import com.uniquindio.android.electiva.elvozarron.util.AdaptadorDeEntrenador;
-import com.uniquindio.android.electiva.elvozarron.vo.Entrenador;
-
-import java.util.ArrayList;
 
 /**
  * @author Stiven Alejandro Rengifo Ospina
@@ -29,12 +26,6 @@ public class EntrenadorActivity extends AppCompatActivity {
     private AdaptadorDeEntrenador adaptadorDeEntrenador;
 
     /**
-     * Atributo entrenadores de la actividad {@link EntrenadorActivity}
-     */
-    private ArrayList<Entrenador> entrenadores;
-
-
-    /**
      * Metodo Callbacks que permite instanciar los atributos de la actividad
      *
      * @param savedInstanceState
@@ -44,15 +35,10 @@ public class EntrenadorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.entrenador_activity);
 
-        entrenadores = new ArrayList<>();
-        entrenadores.add(new Entrenador("1", "Adele", "Femenino", R.drawable.adele));
-        entrenadores.add(new Entrenador("2", "Jhonny Rivera", "Masculino", R.drawable.jhonny));
-        entrenadores.add(new Entrenador("3", "Rihana", "Femenino", R.drawable.rihana));
-
         recyclerView = (RecyclerView) findViewById(R.id.idReciclerView);
         recyclerView.setHasFixedSize(true);
 
-        adaptadorDeEntrenador = new AdaptadorDeEntrenador(entrenadores);
+        adaptadorDeEntrenador = new AdaptadorDeEntrenador();
         recyclerView.setAdapter(adaptadorDeEntrenador);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

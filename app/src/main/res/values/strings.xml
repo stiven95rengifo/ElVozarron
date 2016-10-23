@@ -4,5 +4,32 @@
     <string name="subTitulo">Coach</string>
     <string name="detalles">Detalles</string>
     <string name="txtCardPortada">subtitulo</string>
+    <string name="menu_portada">Portada</string>
+    <string name="menu_entrenadores">Entrenadores</string>
+    <string name="menu_participantes">Participantes</string>
+    <string name="menu_votacion">Votacion</string>
+    <string name="menu_idioma">Idioma</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+
+    <string name="detalles_adele">Adele Laurie Blue Adkins (Tottenham, Inglaterra,
+        5 de mayo de 1988), conocida simplemente como Adele, es una cantante y compositora
+        británica. Desde muy joven mostró su interés por la música y en 2006 egresó de la BRIT
+        School de Artes Escénicas y Tecnología, año en el firmó un contrato con XL Recordings,
+        tras ser descubierta por unas demos que un amigo publicó en MySpace.</string>
+
+    <string name="detalles_jhonny">JHONNY RIVERA. (Jhon Jairo Rivera Valencia) Nació en
+    Pereira-Risaralda un 23 de Febrero, la mayor parte de su vida transcurrió en la vereda
+        Pérez jurisdicción del corregimiento de Arabia - Pereira, región que recuerda con
+        mucho cariño, pues allí en las labores propias del campo al lado de su padre hizo
+        amigos que perdurarán en su corazón. Su humilde  familia esta conformada por sus
+        padres.</string>
+
+    <string name="detalles_rihana">Robyn Rihanna Fenty (Bridgetown, 20 de febrero de 1988),
+        conocida simplemente como Rihanna, es una cantante, actriz y diseñadora de moda
+        barbadense. Comenzó su carrera en el 2003 cuando audicionó para el productor musical
+        Evan Rogers. A la edad de dieciséis, Rogers, decidió llevarla a los Estados Unidos para
+        grabar maquetas. Posteriormente realizó una audición para Jay-Z y firmó un contrato de
+        seis álbumes con Def Jam Recordings.</string>
 
 </resources>

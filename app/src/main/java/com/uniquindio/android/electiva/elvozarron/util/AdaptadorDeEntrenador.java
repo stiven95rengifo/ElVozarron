@@ -5,7 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.uniquindio.android.electiva.elvozarron.R;
@@ -24,15 +27,19 @@ import java.util.ArrayList;
  */
 public class AdaptadorDeEntrenador extends RecyclerView.Adapter<AdaptadorDeEntrenador.AdaptadorViewHolder> {
 
+    /**
+     * Atributo entrenadores del AdaptadorDeEntrenador
+     */
     private ArrayList<Entrenador> entrenadores;
 
     /**
      * Constructor de la clase AdaptadorDeEntrenador
-     *
-     * @param entrenadores lista de entrenadores
      */
-    public AdaptadorDeEntrenador(ArrayList<Entrenador> entrenadores) {
-        this.entrenadores = entrenadores;
+    public AdaptadorDeEntrenador() {
+        entrenadores = new ArrayList<>();
+        entrenadores.add(new Entrenador("1", "Adele", "Femenino", R.drawable.adele, R.string.detalles_adele));
+        entrenadores.add(new Entrenador("2", "Jhonny Rivera", "Masculino", R.drawable.jhonny, R.string.detalles_jhonny));
+        entrenadores.add(new Entrenador("3", "Rihana", "Femenino", R.drawable.rihana, R.string.detalles_rihana));
     }
 
     /**
@@ -50,15 +57,14 @@ public class AdaptadorDeEntrenador extends RecyclerView.Adapter<AdaptadorDeEntre
     }
 
     /**
-     * Metodo que permite actualizar el contenido de un item del RecyclerView
+     * Realiza las modificaciones en cada item de la lista
+     *
      * @param holder
      * @param position
      */
     @Override
     public void onBindViewHolder(AdaptadorViewHolder holder, int position) {
-        mostrarLog("AdaptadoronBind", "Entro 2");
         holder.actualizarEntrenador(entrenadores.get(position));
-
     }
 
     /**
@@ -70,6 +76,7 @@ public class AdaptadorDeEntrenador extends RecyclerView.Adapter<AdaptadorDeEntre
     public int getItemCount() {
         return entrenadores.size();
     }
+//---------------------------> Clase AdaptadorViewHolder
 
     /**
      * Clase AdaptadorViewHolder
@@ -78,27 +85,93 @@ public class AdaptadorDeEntrenador extends RecyclerView.Adapter<AdaptadorDeEntre
      */
     public static class AdaptadorViewHolder extends RecyclerView.ViewHolder {
 
-        //Atributo de un entrenador en el CardView
+        //Atributos de un entrenador en el CardView
         /**
          * Atributo nombreEntrenador de la clase {@link AdaptadorDeEntrenador}
          */
-        private TextView nombreEntrenador;
+        private TextView txtNombre;
 
         /**
-         * Atributo imagen de la clase {@link AdaptadorDeEntrenador}
+         * Atribut txtDescripcion de la clase AdaptadorViewHolder
+         */
+        private TextView txtDescripcion;
+
+        /**
+         * Atributo imagen de la clase AdaptadorViewHolder
          */
         private ImageView imagen;
+
+
+        //Atributos para la animacion ----->
+        /**
+         * Atributo descripcion de la clase AdaptadorViewHolder
+         */
+        LinearLayout linearGroupDetalles;
+
+        /**
+         * Atributo imagenExpandir de la clase AdaptadorViewHolder
+         */
+        ImageView imagenExpandir;
+
+        /**
+         * Atributo banner de la clase AdaptadorViewHolder
+         */
+        LinearLayout linearDescripcion;
 
         /**
          * Constructor
          *
          * @param itemView es el item del cardview el cual va inflar sus campos
          */
-        public AdaptadorViewHolder(View itemView) {
+        public AdaptadorViewHolder(final View itemView) {
             super(itemView);
-            nombreEntrenador = (TextView) itemView.findViewById(R.id.idNombreEntrenador);
+            txtNombre = (TextView) itemView.findViewById(R.id.idNombreEntrenador);
+            txtDescripcion = (TextView) itemView.findViewById(R.id.descripcion);
             imagen = (ImageView) itemView.findViewById(R.id.idImagenEntrenador);
+
+            //Esta layout contiene el evento
+            linearGroupDetalles = (LinearLayout) itemView.findViewById(R.id.linearGroupDetalles);
+            imagenExpandir = (ImageView) itemView.findViewById(R.id.imagenExpandir);
+            linearDescripcion = (LinearLayout) itemView.findViewById(R.id.linearDescripcion);
+            linearGroupDetalles.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    expandir(itemView);
+                }
+            });
         }
+
+        /**
+         * Metodo que permite expandir la descripcion de cada personaje
+         *
+         * @param view
+         */
+        public void expandir(View view) {
+
+            if (linearDescripcion.getVisibility() == View.GONE) {
+                Animacion.expand(linearDescripcion, 250);
+                imagenExpandir.setImageResource(R.mipmap.ic_more);
+                rotate(-180.0f);
+            } else {
+                Animacion.collapse(linearDescripcion, 250);
+                imagenExpandir.setImageResource(R.mipmap.ic_less);
+                rotate(180.0f);
+            }
+        }
+
+        /**
+         * Metodo que permite animar los componentes con respecto a un angulo
+         *
+         * @param angle
+         */
+        private void rotate(float angle) {
+            Animation animation = new RotateAnimation(0.0f, angle, Animation.RELATIVE_TO_SELF, 0.5f,
+                    Animation.RELATIVE_TO_SELF, 0.5f);
+            animation.setFillAfter(true);
+            animation.setDuration(250);
+            imagenExpandir.startAnimation(animation);
+        }
+
 
         /**
          * Este metodo permite actualizar los campos de un item del CardView entrenador_cardview
@@ -106,12 +179,11 @@ public class AdaptadorDeEntrenador extends RecyclerView.Adapter<AdaptadorDeEntre
          * @param entrenador al cual va ser actualizado sus campos en el cardview
          */
         public void actualizarEntrenador(Entrenador entrenador) {
-            nombreEntrenador.setText(entrenador.getNombre());
+            txtNombre.setText(entrenador.getNombre());
+            txtDescripcion.setText(entrenador.getDescripcion());
             imagen.setImageResource(entrenador.getFoto());
         }
     }
-
-
 
 
     public void mostrarLog(String donde, String mensaje) {
