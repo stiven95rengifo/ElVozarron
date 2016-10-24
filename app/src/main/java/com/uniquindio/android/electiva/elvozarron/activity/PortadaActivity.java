@@ -1,11 +1,11 @@
 package com.uniquindio.android.electiva.elvozarron.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
+import android.support.v7.widget.CardView;
+import android.view.View;
 
 import com.uniquindio.android.electiva.elvozarron.R;
 
@@ -15,34 +15,47 @@ import com.uniquindio.android.electiva.elvozarron.R;
  * @author Cristian Camilo Tellez
  * @version 1.0
  */
-public class PortadaActivity extends AppCompatActivity {
+public class PortadaActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle toggle;
+  //  private DrawerLayout drawerLayout;
+//    private ActionBarDrawerToggle toggle;
 
+    private CardView cardView1;
+    private CardView cardView2;
+    private CardView cardView3;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ventana_principal);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+        cardView1=(CardView)findViewById(R.id.cardview1);
+        cardView1.setOnClickListener(this);
 
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        cardView2=(CardView)findViewById(R.id.cardview2);
+        cardView2.setOnClickListener(this);
+
+        cardView3=(CardView)findViewById(R.id.cardview3);
+        cardView3.setOnClickListener(this);
+
+
+
+
     }
 
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public void onClick(View v) {
 
-        if(toggle.onOptionsItemSelected(item)){
-            return true;
+
+        if(v.getId()==cardView1.getId()){
+            startActivity(new Intent(this,EntrenadorActivity.class));
+        }else if(v.getId()==cardView2.getId()){
+            startActivity(new Intent(this,ParticipanteActivity.class));
+        }else{
+
+            //Falta voation
+
         }
-        return super.onOptionsItemSelected(item);
-
 
     }
 }

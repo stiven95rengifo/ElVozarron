@@ -91,7 +91,7 @@ public class DetalleDeParticipanteFragment extends Fragment implements View.OnCl
      */
     public void recibirParticipante(Participante participante) {
         this.participante = participante;
-        imagen = (ImageView) getView().findViewById(R.id.imagenPrincipal);
+        //imagen = (ImageView) getView().findViewById(R.id.imagenPrincipal);
         nombre = (TextView) getView().findViewById(R.id.nombreDetalle);
         nombre.setText(participante.getNombre());
         edad = (TextView) getView().findViewById(R.id.edadDetale);
