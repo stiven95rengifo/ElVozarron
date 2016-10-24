@@ -1,5 +1,8 @@
 package com.uniquindio.android.electiva.elvozarron.vo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
@@ -11,7 +14,7 @@ import java.util.ArrayList;
  * @version 1.0
  */
 
-public class Entrenador {
+public class Entrenador implements Parcelable {
 
     /**
      * Atributo id de la clase Entrenador
@@ -59,6 +62,13 @@ public class Entrenador {
         this.genero = genero;
         this.foto = imagen;
         this.descripcion = descripcion;
+        participantes = new ArrayList<>();
+    }
+
+
+    protected Entrenador(Parcel in) {
+        participantes = new ArrayList<>();
+        reatToParcel(in);
     }
 
 
@@ -178,4 +188,67 @@ public class Entrenador {
     public void setParticipantes(ArrayList<Participante> participantes) {
         this.participantes = participantes;
     }
+
+    /**
+     * * Se usa cuando existen parcelables hijos
+     *
+     * @return un entero
+     */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * Metodo para guardar el objeto en un parcelable
+     *
+     * @param dest
+     * @param flags
+     */
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(nombre);
+        dest.writeString(genero);
+        dest.writeString(historial);
+        dest.writeInt(foto);
+        dest.writeInt(descripcion);
+        dest.writeTypedList(participantes);
+    }
+
+    /**
+     * Método para recuperar los datos de un Parcel, se deben leer en el
+     * mismos que se escribieron.
+     *
+     * @param in Parcel con los datos a leer
+     */
+    public void reatToParcel(Parcel in) {
+        id = in.readString();
+        nombre = in.readString();
+        genero = in.readString();
+        historial = in.readString();
+        foto = in.readInt();
+        descripcion = in.readInt();
+        in.readTypedList(participantes, Participante.CREATOR);
+    }
+
+
+    /**
+     * Es el encargado de crear el Entrenador con base al Parcel
+     * recibido, tambien es necesario para
+     * enviar array para la lectura de arrays enviadas por medio del
+     * parcel
+     */
+    public static final Creator<Entrenador> CREATOR = new Creator<Entrenador>() {
+        @Override
+        public Entrenador createFromParcel(Parcel in) {
+            return new Entrenador(in);
+        }
+
+        @Override
+        public Entrenador[] newArray(int size) {
+            return new Entrenador[size];
+        }
+    };
+
 }

@@ -1,5 +1,8 @@
 package com.uniquindio.android.electiva.elvozarron.vo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Stiven on 17/10/2016.
  * Clase Participante con sus atributos
@@ -8,7 +11,7 @@ package com.uniquindio.android.electiva.elvozarron.vo;
  * @author Cristian Camilo Tellez
  * @version 1.0
  */
-public class Participante {
+public class Participante implements Parcelable {
 
     /**
      * Atributo id de la clase Participante
@@ -55,6 +58,46 @@ public class Participante {
     private String url;
 
     /**
+     * Atributo estado de la clase Participante
+     * <p>
+     * El estado puede ser True=activo, False=Eliminado
+     */
+    private boolean estado;
+
+    /**
+     * Constructor de la clase Participante
+     *
+     * @param id               o cedula del participante
+     * @param nombre           del participante
+     * @param edad             del participante
+     * @param tipoParticipante la relacion se hace con la universidad, puede ser estudiante, profesor, administrativo, otros
+     * @param url              video en youtube de la persona cantando
+     */
+    public Participante(String id, String nombre, int edad, String tipoParticipante, String descripcion, String url) {
+        this.id = id;
+        this.nombre = nombre;
+        this.edad = edad;
+        this.tipoParticipante = tipoParticipante;
+        this.numeroDeVotos = 0;
+        this.url = url;
+        this.estado = true;
+        this.descripcion = descripcion;
+
+    }
+
+    /**
+     * Constructor parcelable para recuperar los datos
+     *
+     * @param in
+     */
+    protected Participante(Parcel in) {
+        numeroDeVotos = 0;
+        estado = true;
+        readToParcel(in);
+    }
+
+
+    /**
      * Metodo que permite obtener el id de la foto del Entrenador
      *
      * @return id de la foto del entrenador
@@ -70,34 +113,6 @@ public class Participante {
      */
     public void setFoto(int foto) {
         this.foto = foto;
-    }
-
-    /**
-     * Atributo estado de la clase Participante
-     *
-     * El estado puede ser True=activo, False=Eliminado
-     */
-    private boolean estado;
-
-    /**
-     * Constructor de la clase Participante
-     *
-     * @param id               o cedula del participante
-     * @param nombre           del participante
-     * @param edad             del participante
-     * @param tipoParticipante la relacion se hace con la universidad, puede ser estudiante, profesor, administrativo, otros
-     * @param url              video en youtube de la persona cantando
-     */
-    public Participante(String id, String nombre, int edad, String tipoParticipante, String descripcion,int foto, String url) {
-        this.id = id;
-        this.nombre = nombre;
-        this.edad = edad;
-        this.tipoParticipante = tipoParticipante;
-        this.numeroDeVotos = 0;
-        this.url = url;
-        this.estado = true;
-        this.descripcion = descripcion;
-        this.foto=foto;
     }
 
     /**
@@ -260,5 +275,81 @@ public class Participante {
      */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    /**
+     * * Se usa cuando existen parcelables hijos
+     *
+     * @return un entero
+     */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * Metodo para guardar el objeto en un parcelable
+     *
+     * @param dest
+     * @param flags
+     */
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(nombre);
+        dest.writeString(descripcion);
+        dest.writeInt(edad);
+        dest.writeInt(foto);
+        dest.writeString(tipoParticipante);
+        dest.writeInt(numeroDeVotos);
+        dest.writeString(url);
+        dest.writeString(String.valueOf(estado));
+        dest.writeParcelable(entrenador, flags);
+    }
+
+    /**
+     * Método para recuperar los datos de un Parcel, se deben leer en el
+     * mismos que se escribieron.
+     *
+     * @param in Parcel con los datos a leer
+     */
+    public void readToParcel(Parcel in) {
+        id = in.readString();
+        nombre = in.readString();
+        descripcion = in.readString();
+        edad = in.readInt();
+        foto = in.readInt();
+        tipoParticipante = in.readString();
+        numeroDeVotos = in.readInt();
+        url = in.readString();
+        estado = in.readString().equals("true") ? true : false;
+        entrenador = in.readParcelable(Entrenador.class.getClassLoader());
+    }
+
+    /**
+     * Es el encargado de crear el participante con base al Parcel
+     * recibido, tambien es necesario para
+     * enviar array para la lectura de arrays enviadas por medio del
+     * parcel
+     */
+    public static final Creator<Participante> CREATOR = new Creator<Participante>() {
+        @Override
+        public Participante createFromParcel(Parcel in) {
+            return new Participante(in);
+        }
+
+        @Override
+        public Participante[] newArray(int size) {
+            return new Participante[size];
+        }
+    };
+
+    /**
+     * Permite retornar el estado de un participante
+     *
+     * @return una cadena
+     */
+    public String retornarEstado() {
+        return estado == true ? "Activo" : "Eliminado";
     }
 }

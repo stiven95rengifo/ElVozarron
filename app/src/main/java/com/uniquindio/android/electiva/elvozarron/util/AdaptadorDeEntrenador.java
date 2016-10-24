@@ -36,9 +36,9 @@ public class AdaptadorDeEntrenador extends RecyclerView.Adapter<AdaptadorDeEntre
      */
     public AdaptadorDeEntrenador() {
         entrenadores = new ArrayList<>();
-        entrenadores.add(new Entrenador("1", "Adele", "Femenino", R.drawable.adele, R.string.detalles_adele));
-        entrenadores.add(new Entrenador("2", "Jhonny Rivera", "Masculino", R.drawable.jhonny, R.string.detalles_jhonny));
-        entrenadores.add(new Entrenador("3", "Rihana", "Femenino", R.drawable.rihana, R.string.detalles_rihana));
+        entrenadores.add(new Entrenador("1", "Adele", "Femenino", R.drawable.adele_lanscape, R.string.detalles_adele));
+        entrenadores.add(new Entrenador("2", "Jhonny Rivera", "Masculino", R.drawable.rivera_lanscape, R.string.detalles_jhonny));
+        entrenadores.add(new Entrenador("3", "Rihana", "Femenino", R.drawable.rihanna_lanscape, R.string.detalles_rihana));
     }
 
     /**
@@ -148,11 +148,11 @@ public class AdaptadorDeEntrenador extends RecyclerView.Adapter<AdaptadorDeEntre
 
             if (linearDescripcion.getVisibility() == View.GONE) {
                 Animacion.expand(linearDescripcion, 250);
-                imagenExpandir.setImageResource(R.mipmap.ic_more);
+                imagenExpandir.setImageResource(R.drawable.ic_menos);
                 rotate(-180.0f);
             } else {
                 Animacion.collapse(linearDescripcion, 250);
-                imagenExpandir.setImageResource(R.mipmap.ic_less);
+                imagenExpandir.setImageResource(R.drawable.ic_menos);
                 rotate(180.0f);
             }
         }

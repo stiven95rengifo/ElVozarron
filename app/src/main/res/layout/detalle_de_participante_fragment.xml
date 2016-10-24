@@ -3,14 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/degradado"
     tools:context="com.uniquindio.android.electiva.elvozarron.fragments.DetalleDeParticipanteFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <ImageView
         android:id="@+id/imagenPrincipal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:layout_height="170dp"
+        android:src="@drawable/cllapse"
+        ></ImageView>
+      <!-- Falta la imagen-->
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -31,7 +34,6 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="7dp"
                 android:layout_marginTop="15dp"
-                android:text="J balvin"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textStyle="bold" />
 
@@ -42,7 +44,6 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="7dp"
                 android:layout_marginTop="15dp"
-                android:text="20 años"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textStyle="bold" />
 
@@ -70,7 +71,6 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="15dp"
                     android:layout_weight="2"
-                    android:text="Adele"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -84,8 +84,7 @@
                 android:layout_marginTop="25dp"
                 android:gravity="center_horizontal"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textStyle="bold"
-                android:text="ESTUDIANTE"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtEstadoParticipante"
@@ -96,16 +95,20 @@
                 android:layout_marginTop="15dp"
                 android:gravity="center_horizontal"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textStyle="bold"
-                android:text="Elimnado"/>
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btnAbrirUrl"
-                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/btnVideo" />
-
+                android:layout_marginTop="20dp"
+                android:text="@string/btnVideo"
+                android:elevation="9dp"
+                android:background="#999999"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="2dp"
+               ></Button>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

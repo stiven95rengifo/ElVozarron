@@ -4,10 +4,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.uniquindio.android.electiva.elvozarron.R;
+import com.uniquindio.android.electiva.elvozarron.fragments.ListaParticipantesFragment;
 import com.uniquindio.android.electiva.elvozarron.vo.Participante;
 
 import java.util.ArrayList;
@@ -26,13 +28,20 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
      */
     private ArrayList<Participante> participantes;
 
+
+    /**
+     * Atributo listener del  AdaptadorDeParticipante
+     */
+    private static OnClickAdaptadorParticipante listener;
+
     /**
      * Constructor del AdaptadorDeParticipante
      *
      * @param participantes lista de participantes
      */
-    public AdaptadorDeParticipante(ArrayList<Participante> participantes) {
+    public AdaptadorDeParticipante(ArrayList<Participante> participantes, ListaParticipantesFragment listaParticipantesFragment) {
         this.participantes = participantes;
+        listener = (OnClickAdaptadorParticipante) listaParticipantesFragment;
     }
 
     /**
@@ -73,11 +82,18 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
 
 
     /**
+     * Esta interface permite compartir el evento de un fragmento con otro
+     */
+    public interface OnClickAdaptadorParticipante {
+        void onClickParticipante(int posicion);
+    }
+
+    /**
      * Clase AdaptadorViewHolder
      * Esta clase representa un Item de la lista de participante el cual
      * almacena las referencias de los views dentro del layout con propósitos de acceso rápido.
      */
-    public static class AdaptadorViewHolder extends RecyclerView.ViewHolder {
+    public static class AdaptadorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         /**
          * Atributo imagen de la clase AdaptadorViewHolder
@@ -95,6 +111,16 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
         private TextView txtNumVotacion;
 
         /**
+         * Atributo imageButton de la clase  AdaptadorDeParticipante
+         */
+        private ImageButton imageButton;
+
+        /**
+         * Atributo detalles de la clase  AdaptadorDeParticipante
+         */
+        private ImageButton detalles;
+
+        /**
          * Constructor de la clase AdaptadorViewHolder
          *
          * @param itemView vista la cual sera inflada
@@ -104,6 +130,10 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
             imagen = (ImageView) itemView.findViewById(R.id.imagenParticipante);
             txtNombre = (TextView) itemView.findViewById(R.id.txtNombre);
             txtNumVotacion = (TextView) itemView.findViewById(R.id.txtNumVotacion);
+            imageButton=(ImageButton) itemView.findViewById(R.id.imageVotar);
+
+            detalles=(ImageButton)itemView.findViewById(R.id.imageMas);
+            detalles.setOnClickListener(this);
         }
 
         /**
@@ -112,10 +142,17 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
          * @param participante el cual se agregaran sus datos al CardView
          */
         public void actualizarItemParticipante(Participante participante) {
-            imagen.setImageResource(participante.getFoto());
-            txtNombre.setText(participante.getNombre());
-            txtNumVotacion.setText(participante.getNumeroDeVotos());
 
+            txtNombre.setText(participante.getNombre());
+            txtNumVotacion.setText(String.valueOf(participante.getNumeroDeVotos()));
+        }
+
+        /**
+         * @param v
+         */
+        @Override
+        public void onClick(View v) {
+            listener.onClickParticipante(getAdapterPosition());
         }
     }
 
