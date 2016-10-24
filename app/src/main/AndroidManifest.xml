@@ -11,12 +11,11 @@
         <activity
             android:name=".activity.BienvenidaActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".activity.EntrenadorActivity">
+            android:theme="@style/Theme.AppCompat" />
+        <activity android:name=".activity.EntrenadorActivity"></activity>
 
-        </activity>
-        <activity android:name=".activity.PortadaActivity">
-
+        <activity android:name=".activity.PortadaActivity"
+            android:theme="@style/Theme.Design.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,9 +23,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.ParticipanteActivity">
-
-        </activity>
+        <activity android:name=".activity.ParticipanteActivity"></activity>
 
         <uses-permission android:name="android.permission.INTERNET" />
 

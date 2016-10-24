@@ -6,7 +6,7 @@
         <item
             android:id="@+id/menu_portada"
             android:orderInCategory="1"
-            android:icon="@mipmap/ic_portada"
+            android:icon="@drawable/ic_home"
             android:title="@string/menu_portada"
 
             app:showAsAction="never" />
@@ -15,24 +15,28 @@
             android:id="@+id/menu_entrenadores"
             android:orderInCategory="2"
             android:title="@string/menu_entrenadores"
+            android:icon="@drawable/ic_entrenadores"
             app:showAsAction="never" />
 
         <item
             android:id="@+id/menu_participantes"
             android:orderInCategory="3"
             android:title="@string/menu_participantes"
+            android:icon="@drawable/ic_participantes"
             app:showAsAction="never" />
 
         <item
             android:id="@+id/menu_votacion"
             android:orderInCategory="4"
             android:title="@string/menu_votacion"
+            android:icon="@drawable/ic_votacion"
             app:showAsAction="never" />
 
         <item
             android:id="@+id/menu_idioma"
             android:orderInCategory="5"
             android:title="@string/menu_idioma"
+            android:icon="@drawable/ic_idioma"
             app:showAsAction="never" />
     </group>
 
