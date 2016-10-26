@@ -14,8 +14,7 @@
             android:theme="@style/Theme.AppCompat" />
         <activity android:name=".activity.EntrenadorActivity"></activity>
 
-        <activity android:name=".activity.PortadaActivity"
-            android:theme="@style/Theme.Design.NoActionBar">
+        <activity android:name=".activity.PortadaActivity"            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

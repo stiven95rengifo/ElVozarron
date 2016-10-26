@@ -4,9 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--Logo de la aplicacion-->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="230dp"
         android:src="@drawable/menu_logo"
-        android:scaleType="fitEnd" />
+        android:scaleType="fitXY" />
 </FrameLayout>

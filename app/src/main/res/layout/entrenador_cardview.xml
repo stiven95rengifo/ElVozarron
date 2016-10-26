@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/identrenador_cardview"
     android:layout_width="match_parent"
-    android:layout_height="246dp"
+    android:layout_height="wrap_content"
     android:layout_margin="6dp"
     android:padding="8dp"
+    app:cardBackgroundColor="#D9D9D9"
     app:cardCornerRadius="5dp"
-    app:cardElevation="9dp"
-    app:cardBackgroundColor="#D9D9D9">
+    app:cardElevation="9dp" >
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/marco">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/idNombreEntrenador"
@@ -30,7 +30,6 @@
             android:id="@+id/idSubTitulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/idNombreEntrenador"
             android:paddingLeft="15dp"
             android:text="@string/subTitulo"
             android:textColor="#000000"
@@ -40,7 +39,6 @@
             android:id="@+id/idImagenEntrenador"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/idSubTitulo"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
             android:adjustViewBounds="true" />
@@ -49,9 +47,8 @@
             android:id="@+id/linearGroupDetalles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/idImagenEntrenador"
-            android:orientation="horizontal"
             android:layout_marginTop="8dp"
+            android:orientation="horizontal"
             android:padding="8dp">
 
             <TextView
@@ -59,6 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
+
                 android:gravity="center_vertical"
                 android:text="@string/detalles"
                 android:textColor="@color/vinotinto"
@@ -78,7 +76,7 @@
             android:id="@+id/linearDescripcion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
+            android:background="@color/colorGris"
             android:orientation="vertical"
             android:paddingLeft="8dp"
             android:visibility="gone">
@@ -88,10 +86,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
-                android:textColor="#000000"
+                android:textColor="@color/vinotinto"
                 android:textSize="16sp" />
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 </android.support.v7.widget.CardView>
 
 

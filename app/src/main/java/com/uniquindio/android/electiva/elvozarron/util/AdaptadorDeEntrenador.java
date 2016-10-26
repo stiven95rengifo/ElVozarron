@@ -123,7 +123,7 @@ public class AdaptadorDeEntrenador extends RecyclerView.Adapter<AdaptadorDeEntre
          */
         public AdaptadorViewHolder(final View itemView) {
             super(itemView);
-            txtNombre = (TextView) itemView.findViewById(R.id.idNombreEntrenador);
+           txtNombre = (TextView) itemView.findViewById(R.id.idNombreEntrenador);
             txtDescripcion = (TextView) itemView.findViewById(R.id.descripcion);
             imagen = (ImageView) itemView.findViewById(R.id.idImagenEntrenador);
 
@@ -148,7 +148,7 @@ public class AdaptadorDeEntrenador extends RecyclerView.Adapter<AdaptadorDeEntre
 
             if (linearDescripcion.getVisibility() == View.GONE) {
                 Animacion.expand(linearDescripcion, 250);
-                imagenExpandir.setImageResource(R.drawable.ic_menos);
+                imagenExpandir.setImageResource(R.drawable.ic_mas);
                 rotate(-180.0f);
             } else {
                 Animacion.collapse(linearDescripcion, 250);

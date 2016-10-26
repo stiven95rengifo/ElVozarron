@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cardViewParticipante"
+    android:id="@+id/cardview_participante"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
-    android:layout_margin="3dp"
-    android:background="@drawable/degradado"
-    app:cardBackgroundColor="@color/colorGris"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    android:padding="8dp"
+    app:cardBackgroundColor="#D9D9D9"
     app:cardCornerRadius="5dp"
     app:cardElevation="9dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/imagenParticipante"
-            android:layout_width="match_parent"
-            android:layout_height="195dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:src="@drawable/balvin"/>
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/balvin" />
 
         <LinearLayout
+            android:id="@+id/linearGroupDetalles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imagenParticipante"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal"
-            android:weightSum="1">
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/txtNombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="0.6"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/vinotinto"
@@ -46,8 +48,6 @@
                 android:id="@+id/imageVotar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:layout_weight="0.1"
                 android:onClick="votarParticipante"
                 android:src="@drawable/ic_votacion" />
 
@@ -61,12 +61,94 @@
                 android:textSize="22dp" />
 
             <ImageButton
-                android:id="@+id/imageMas"
+                android:id="@+id/imagenExpandir"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:layout_weight="0.1"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/detalles"
                 android:src="@drawable/ic_detalles" />
+
         </LinearLayout>
-    </RelativeLayout>
+
+        <!--Para mostrar los detalles del entrenador-->
+        <LinearLayout
+            android:id="@+id/linearDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorGris"
+            android:orientation="vertical"
+            android:paddingLeft="8dp"
+            android:visibility="gone">
+
+
+            <TextView
+                android:id="@+id/edad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:textColor="@color/vinotinto"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="0.5"
+                    android:text="@string/nombre_entrenador"
+                    android:textColor="@color/vinotinto"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_weight="0.5"
+                    android:id="@+id/nombreEntrenador"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:textColor="@color/vinotinto"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/relacionUniversidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:textColor="@color/vinotinto"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/estado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:textColor="@color/vinotinto"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/descripcion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:textColor="@color/vinotinto"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/boton_url"
+                android:layout_width="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorAccent"
+                android:text="@string/btnVideo"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </LinearLayout>
 </android.support.v7.widget.CardView>

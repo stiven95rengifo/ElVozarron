@@ -104,7 +104,7 @@ public class ListaParticipantesFragment extends Fragment implements AdaptadorDeP
         super.onActivityCreated(savedInstanceState);
         recyclerView = (RecyclerView) getView().findViewById(R.id.idReciclerViewFragment);
 
-        adaptador = new AdaptadorDeParticipante(participantes, this);
+        adaptador = new AdaptadorDeParticipante(participantes);
         recyclerView.setAdapter(adaptador);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
