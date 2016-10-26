@@ -1,18 +1,25 @@
 package com.uniquindio.android.electiva.elvozarron.fragments;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.uniquindio.android.electiva.elvozarron.R;
+import com.uniquindio.android.electiva.elvozarron.vo.Entrenador;
+import com.uniquindio.android.electiva.elvozarron.vo.Participante;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 /**
@@ -23,6 +30,16 @@ import java.util.regex.Pattern;
  * @version 1.0
  */
 public class AgregarParticipanteFragment extends Fragment implements View.OnClickListener {
+
+    /**
+     * Atributo entrenadores del framento
+     */
+    private ArrayList<Entrenador> entrenadores;
+
+    /**
+     * Atributo posicion del fragmento
+     */
+    private int posicion;
 
     /**
      * Atributo tilCedula del fragmento
@@ -44,6 +61,12 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
      */
     private TextInputLayout tilTipo;
 
+
+    /**
+     * Atributo tilUrlo del fragmento
+     */
+    private TextInputLayout tilUrl;
+
     /**
      * Atributo btnAceptar del fragmento
      */
@@ -59,6 +82,10 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
      */
     private Spinner spinner;
 
+    /**
+     * Atributo listener del fragmento
+     */
+    private OnParticipanteAgregadoListener listener;
 
     /**
      * Contructor del fragmento
@@ -80,20 +107,63 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.agregar_participante_fragment, container, false);
+
+        Bundle bundle = getArguments();
+        entrenadores = bundle.getParcelableArrayList("ENTRENADORES");
+
         tilCedula = (TextInputLayout) view.findViewById(R.id.til_cedula);
         tilNombre = (TextInputLayout) view.findViewById(R.id.til_nombre);
         tilEdad = (TextInputLayout) view.findViewById(R.id.til_edad);
         tilTipo = (TextInputLayout) view.findViewById(R.id.til_tipo);
+        tilUrl = (TextInputLayout) view.findViewById(R.id.til_url);
+
         btnAceptar = (Button) view.findViewById(R.id.boton_aceptar);
         spinner = (Spinner) view.findViewById(R.id.spinner);
+
+        //Spinner
+        String[] nombres = {entrenadores.get(0).getNombre(), entrenadores.get(1).getNombre(), entrenadores.get(2).getNombre()};
+        ArrayAdapter<String> adaptador = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, nombres);
+        adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adaptador);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                posicion = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(getContext(), "Debe seleccionar algun entrenador", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         btnAceptar.setOnClickListener(this);
         btnCancelar = (Button) view.findViewById(R.id.boton_cancelar);
         btnCancelar.setOnClickListener(this);
         return view;
     }
 
+    /**
+     * Callbaks que es llamado cuando una actividad es asocidad al fragmento
+     *
+     * @param context
+     */
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Activity activity;
+        if (context instanceof Activity) {
+            activity = (Activity) context;
+            try {
+                listener = (OnParticipanteAgregadoListener) activity;
+            } catch (ClassCastException e) {
+                throw new ClassCastException(activity.toString() + " Debe implementar la interfaz OnPersonajeSeleccionadoListener");
+            }
+        }
+    }
 
     /**
+     * Metodo onClicl, para el cual permite almanacenar un participante
      *
      * @param v
      */
@@ -108,22 +178,46 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
      * Metodo que permite validar si los datos ingresados por un participante son correctos
      */
     private void validarDatos() {
+
         String cedula = tilCedula.getEditText().getText().toString();
         String nombre = tilNombre.getEditText().getText().toString();
         String edad = tilEdad.getEditText().getText().toString();
         String tipo = tilTipo.getEditText().getText().toString();
+        String url = tilUrl.getEditText().getText().toString();
 
-        boolean a = esCedulaValido(cedula);
-        boolean b = esNombreValido(nombre);
-        boolean c = esEdadValido(edad);
-        boolean d = esTipoValido(tipo);
+        //boolean a = esCedulaValido(cedula);
+        //boolean b = esNombreValido(nombre);
+        // boolean c = esEdadValido(edad);
+        // boolean d = esTipoValido(tipo);
+        // boolean e = esUrlValido(url);
 
-        if (a && b && c && d) {
-            // OK, se pasa a la siguiente acción
 
-            Toast.makeText(getContext(), "Se guardo el registro", Toast.LENGTH_LONG).show();
-            //Empezar las tranferencias entre los fragmentos
+        //if (a && b && c && d && e) {
+        Participante participante = new Participante(cedula, nombre, Integer.parseInt(edad), tipo, url);
+        participante.setEntrenador(entrenadores.get(posicion));
+        entrenadores.get(posicion).agregarParticipante(participante);
+        Toast.makeText(getContext(), "Participante Registrado", Toast.LENGTH_LONG).show();
+
+
+    }
+
+    /**
+     * Este metodo permite validar si una URL es correcta
+     *
+     * @param url
+     * @return true si es valido, false de lo contrario
+     */
+    private boolean esUrlValido(String url) {
+        String regex = "^(https?://)?(([\\w!~*'().&=+$%-]+: )?[\\w!~*'().&=+$%-]+@)?(([0-9]{1,3}\\.){3}[0-9]{1,3}|([\\w!~*'()-]+\\.)*([\\w^-][\\w-]{0,61})?[\\w]\\.[a-z]{2,6})(:[0-9]{1,4})?((/*)|(/+[\\w!~*'().;?:@&=+$,%#-]+)+/*)$";
+
+        Pattern patron = Pattern.compile(regex);
+        if (!patron.matcher(url).matches()) {
+            tilUrl.setError("URL Invalido");
+            return false;
+        } else {
+            tilUrl.setError(null);
         }
+        return true;
     }
 
     /**
@@ -169,7 +263,7 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
      */
     private boolean esEdadValido(String edad) {
         Pattern patron = Pattern.compile("^[0-9]");
-        if (!patron.matcher(edad).matches() || edad.length() > 3) {
+        if (!patron.matcher(edad).matches() || Integer.parseInt(edad) > 105) {
             tilEdad.setError("Edad inválido");
             return false;
         } else {
@@ -185,9 +279,8 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
      * @return true si es valido, false de lo contrario
      */
     private boolean esTipoValido(String tipo) {
-
-        Pattern patron = Pattern.compile("^[0-9]");
-        if (!patron.matcher(tipo).matches() || tipo.length() > 90) {
+        Pattern patron = Pattern.compile("^[a-zA-Z ]+$");
+        if (!patron.matcher(tipo).matches() || tipo.length() > 100) {
             tilTipo.setError("Relacion inválida");
             return false;
         } else {
@@ -196,4 +289,8 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
         return true;
     }
 
+
+    public interface OnParticipanteAgregadoListener {
+        void onParticipanteAgregado(ArrayList<Entrenador> entrenadors);
+    }
 }

@@ -1,7 +1,6 @@
 package com.uniquindio.android.electiva.elvozarron.util;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,11 +33,11 @@ public class AdaptadorDeEntrenador extends RecyclerView.Adapter<AdaptadorDeEntre
     /**
      * Constructor de la clase AdaptadorDeEntrenador
      */
-    public AdaptadorDeEntrenador() {
-        entrenadores = new ArrayList<>();
-        entrenadores.add(new Entrenador("1", "Adele", "Femenino", R.drawable.adele_lanscape, R.string.detalles_adele));
-        entrenadores.add(new Entrenador("2", "Jhonny Rivera", "Masculino", R.drawable.rivera_lanscape, R.string.detalles_jhonny));
-        entrenadores.add(new Entrenador("3", "Rihana", "Femenino", R.drawable.rihanna_lanscape, R.string.detalles_rihana));
+    public AdaptadorDeEntrenador(ArrayList<Entrenador>entrenadores) {
+        this.entrenadores = entrenadores;
+        //entrenadores.add(new Entrenador("1", "Adele", "Femenino", R.drawable.adele_lanscape, R.string.detalles_adele));
+        //entrenadores.add(new Entrenador("2", "Jhonny Rivera", "Masculino", R.drawable.rivera_lanscape, R.string.detalles_jhonny));
+        //entrenadores.add(new Entrenador("3", "Rihana", "Femenino", R.drawable.rihanna_lanscape, R.string.detalles_rihana));
     }
 
     /**
@@ -123,7 +122,7 @@ public class AdaptadorDeEntrenador extends RecyclerView.Adapter<AdaptadorDeEntre
          */
         public AdaptadorViewHolder(final View itemView) {
             super(itemView);
-           txtNombre = (TextView) itemView.findViewById(R.id.idNombreEntrenador);
+            txtNombre = (TextView) itemView.findViewById(R.id.idNombreEntrenador);
             txtDescripcion = (TextView) itemView.findViewById(R.id.descripcion);
             imagen = (ImageView) itemView.findViewById(R.id.idImagenEntrenador);
 
@@ -183,8 +182,12 @@ public class AdaptadorDeEntrenador extends RecyclerView.Adapter<AdaptadorDeEntre
         }
     }
 
-
-    public void mostrarLog(String donde, String mensaje) {
-        Log.i(donde, mensaje);
+    /**
+     * Metodo el cual permite obtener una lista de entrenadores
+     *
+     * @return lista de entrenadores
+     */
+    public ArrayList<Entrenador> getEntrenadores() {
+        return entrenadores;
     }
 }

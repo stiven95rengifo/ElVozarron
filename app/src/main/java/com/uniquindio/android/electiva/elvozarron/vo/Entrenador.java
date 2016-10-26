@@ -251,4 +251,19 @@ public class Entrenador implements Parcelable {
         }
     };
 
+    /**
+     * Metodo que permite agregar un participante a un entrenador
+     * @param participante
+     * @return
+     */
+    public boolean agregarParticipante(Participante participante) {
+        for (Participante p : participantes) {
+            if (p.getId().equals(participante.getId())) {
+                return false;
+            }
+        }
+        participantes.add(participante);
+        return true;
+    }
+
 }

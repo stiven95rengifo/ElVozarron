@@ -4,12 +4,16 @@ package com.uniquindio.android.electiva.elvozarron.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.uniquindio.android.electiva.elvozarron.R;
+import com.uniquindio.android.electiva.elvozarron.vo.Entrenador;
+
+import java.util.ArrayList;
 
 /**
  * Fragmento InicioFragment el cual permite el menu de navegacion de laApp
@@ -20,6 +24,10 @@ import com.uniquindio.android.electiva.elvozarron.R;
  */
 public class InicioFragment extends Fragment implements View.OnClickListener {
 
+    /**
+     * Atributo entrenadores del fragmento InicioFragmento
+     */
+    private ArrayList<Entrenador> entrenadores;
     /**
      * Atributo cardView1 del fragmento InicioFragment
      */
@@ -36,18 +44,28 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
     private CardView cardView3;
 
     /**
-     * Constructor
+     * Constructor por defecto
      */
     public InicioFragment() {
         // Required empty public constructor
     }
 
-
+    /**
+     * Este metodo permite dibujar la interfaz para el  fragmento
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return la vista para dibujarla
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.inicio_fragment, container, false);
+        View view = inflater.inflate(R.layout.inicio_fragment, container, false);
+
+        Bundle bundle = getArguments();
+        entrenadores = bundle.getParcelableArrayList("ENTRENADORES");
         cardView1 = (CardView) view.findViewById(R.id.cardview1);
         cardView1.setOnClickListener(this);
         cardView2 = (CardView) view.findViewById(R.id.cardview2);
@@ -57,33 +75,44 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    /**
+     * Metodo onClick el cual permite navegar por los diferentes fragmentos
+     *
+     * @param v la vista la cual va ser seleccionada
+     */
     @Override
     public void onClick(View v) {
-        Fragment fragmentoGenerico = null;
-        FragmentManager fragmentManager = getFragmentManager();
+
+        Fragment fragmento = null;
 
         switch (v.getId()) {
             case R.id.cardview1:
-                fragmentoGenerico = new EntrenadorFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("ENTRENADORES", entrenadores);
+                fragmento = new EntrenadorFragment();
+                fragmento.setArguments(bundle);
                 break;
 
             case R.id.cardview2:
-                fragmentoGenerico = new ParticipanteFragment();
+                fragmento = new ParticipanteFragment();
                 break;
 
             case R.id.cardview3:
-                fragmentoGenerico = new VotacionFragment();
+                fragmento = new VotacionFragment();
                 break;
         }
 
-        if (fragmentoGenerico != null) {
-            fragmentManager
-                    .beginTransaction().replace(R.id.contenedor_principal, fragmentoGenerico)
-                    .commit();
+        if (fragmento != null) {
+
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction transaccion = fragmentManager.beginTransaction();
+
+            transaccion.replace(R.id.contenedor_principal, fragmento);
+            transaccion.addToBackStack(null);
+            //Hago commit a la transaccion
+            transaccion.commit();
         }
-
-
         // Setear título actual
-       // setTitle(itemDrawer.getTitle());
+        // setTitle(itemDrawer.getTitle());
     }
 }

@@ -38,7 +38,7 @@ public class VotacionFragment extends Fragment {
     public VotacionFragment() {
         // Required empty public constructor
         participantes = new ArrayList<>();
-        participantes.add(new Participante("1", "Stiven Ospina", 21, "Estudiante", "Con sueños de ser el mejor cantante", "https://www.youtube.com/watch?v=kffacxfA7G4"));
+       // participantes.add(new Participante("1", "Stiven Ospina", 21, "Estudiante", "Con sueños de ser el mejor cantante", "https://www.youtube.com/watch?v=kffacxfA7G4"));
 
     }
 

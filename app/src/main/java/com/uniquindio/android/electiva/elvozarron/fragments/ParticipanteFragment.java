@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.uniquindio.android.electiva.elvozarron.R;
 import com.uniquindio.android.electiva.elvozarron.util.AdaptadorDeParticipante;
+import com.uniquindio.android.electiva.elvozarron.vo.Entrenador;
 import com.uniquindio.android.electiva.elvozarron.vo.Participante;
 
 import java.util.ArrayList;
@@ -25,26 +26,26 @@ import java.util.ArrayList;
 public class ParticipanteFragment extends Fragment {
 
     /**
-     * Atributo participantes del fragmento ListaDeParticipanteFragment
+     * Atributo participantes del fragmento ParticipanteFragment
      */
     private ArrayList<Participante> participantes;
 
     /**
-     * Atributo adaptador del fragmento ListaDeParticipanteFragment
+     * Atributo adaptador del fragmento ParticipanteFragment
      */
     private AdaptadorDeParticipante adaptador;
 
     /**
-     * Atributo recyclerView del fragmento ListaDeParticipanteFragment
+     * Atributo recyclerView del fragmento ParticipanteFragment
      */
     private RecyclerView recyclerView;
 
     /**
-     * Atributo listener del fragmento ListaParticipanteFragment
+     * Atributo listener del fragmento ParticipanteFragment
      */
     public ParticipanteFragment() {
         participantes = new ArrayList<>();
-        participantes.add(new Participante("1", "Nombre", 21, "Estudiante", "Con sueños de ser el mejor cantante", "https://www.youtube.com/watch?v=kffacxfA7G4"));
+
     }
 
     /**
@@ -60,6 +61,18 @@ public class ParticipanteFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.participante_fragment, container, false);
+
+        Bundle bundle = this.getArguments();
+        ArrayList<Entrenador> entrenadores = bundle.getParcelableArrayList("ENTRENADORES");
+
+        for (Entrenador e : entrenadores) {
+
+            for (Participante p : e.getParticipantes()) {
+                participantes.add(p);
+            }
+        }
+
+
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerParticipante);
         adaptador = new AdaptadorDeParticipante(participantes);
         recyclerView.setAdapter(adaptador);

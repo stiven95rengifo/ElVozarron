@@ -97,7 +97,7 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
      * Esta clase representa un Item de la lista de participante el cual
      * almacena las referencias de los views dentro del layout con propósitos de acceso rápido.
      */
-    public static class AdaptadorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class AdaptadorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         /**
          * Atributo imagen de la clase AdaptadorViewHolder
@@ -159,10 +159,6 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
          */
         private TextView estado;
 
-        /**
-         * Atributo txtDescripcion de la clase AdaptadorViewHolder
-         */
-        private TextView txtDescripcion;
 
         /**
          * Atributo btnUrl de la clase AdaptadorViewHolder
@@ -178,12 +174,11 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
             super(itemView);
             imagen = (ImageView) itemView.findViewById(R.id.imagenParticipante);
             txtNombre = (TextView) itemView.findViewById(R.id.txtNombre);
-            edad=(TextView) itemView.findViewById(R.id.edad);
-            nombreEntrenador=(TextView) itemView.findViewById(R.id.nombreEntrenador);
-            relacionU=(TextView) itemView.findViewById(R.id.relacionUniversidad);
-            estado=(TextView) itemView.findViewById(R.id.estado);
-            txtDescripcion = (TextView) itemView.findViewById(R.id.descripcion);
-            btnUrl=(Button)itemView.findViewById(R.id.boton_url);
+            edad = (TextView) itemView.findViewById(R.id.edad);
+            nombreEntrenador = (TextView) itemView.findViewById(R.id.nombreEntrenador);
+            relacionU = (TextView) itemView.findViewById(R.id.relacionUniversidad);
+            estado = (TextView) itemView.findViewById(R.id.estado);
+            btnUrl = (Button) itemView.findViewById(R.id.boton_url);
             btnUrl.setOnClickListener(this);
             txtNumVotacion = (TextView) itemView.findViewById(R.id.txtNumVotacion);
             imageButton = (ImageButton) itemView.findViewById(R.id.imageVotar);
@@ -238,18 +233,21 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
             edad.setText(String.valueOf(participante.getEdad()));
             nombreEntrenador.setText("Adele");
             relacionU.setText(participante.getTipoParticipante());
-            estado.setText(participante.isEstado()?"Activo":"Eliminado");
-            txtDescripcion.setText(participante.getDescripcion());
+            estado.setText(participante.isEstado() ? "Activo" : "Eliminado");
             txtNumVotacion.setText(String.valueOf(participante.getNumeroDeVotos()));
 
         }
 
-
+        /**
+         * Metodo onClick el cual permite el evento de mostrar el video de un participante
+         *
+         * @param v
+         */
         @Override
         public void onClick(View v) {
-            if(v.getId()==btnUrl.getId()){
-                Toast.makeText(v.getContext(),"Mostrar video",Toast.LENGTH_SHORT).show();
-               // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(participante.getUrl())));
+            if (v.getId() == btnUrl.getId()) {
+                Toast.makeText(v.getContext(), "Mostrar video", Toast.LENGTH_SHORT).show();
+                // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(participante.getUrl())));
             }
         }
     }

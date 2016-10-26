@@ -23,12 +23,7 @@ public class Participante implements Parcelable {
      */
     private String nombre;
 
-    /**
-     * Atributo descripcion de la clase Participante
-     */
-    private String descripcion;
-
-    /**
+        /**
      * Atributo edad de la clase Participante
      */
     private int edad;
@@ -73,7 +68,7 @@ public class Participante implements Parcelable {
      * @param tipoParticipante la relacion se hace con la universidad, puede ser estudiante, profesor, administrativo, otros
      * @param url              video en youtube de la persona cantando
      */
-    public Participante(String id, String nombre, int edad, String tipoParticipante, String descripcion, String url) {
+    public Participante(String id, String nombre, int edad, String tipoParticipante, String url) {
         this.id = id;
         this.nombre = nombre;
         this.edad = edad;
@@ -81,8 +76,6 @@ public class Participante implements Parcelable {
         this.numeroDeVotos = 0;
         this.url = url;
         this.estado = true;
-        this.descripcion = descripcion;
-
     }
 
     /**
@@ -260,24 +253,6 @@ public class Participante implements Parcelable {
     }
 
     /**
-     * Permite obtener la descripcion del participante
-     *
-     * @return descripcion del participante
-     */
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    /**
-     * Permite modificar la descripcion del participante
-     *
-     * @param descripcion del participante
-     */
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    /**
      * * Se usa cuando existen parcelables hijos
      *
      * @return un entero
@@ -297,7 +272,6 @@ public class Participante implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
         dest.writeString(nombre);
-        dest.writeString(descripcion);
         dest.writeInt(edad);
         dest.writeInt(foto);
         dest.writeString(tipoParticipante);
@@ -316,7 +290,6 @@ public class Participante implements Parcelable {
     public void readToParcel(Parcel in) {
         id = in.readString();
         nombre = in.readString();
-        descripcion = in.readString();
         edad = in.readInt();
         foto = in.readInt();
         tipoParticipante = in.readString();
