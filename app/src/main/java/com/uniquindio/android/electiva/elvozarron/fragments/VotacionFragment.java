@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.uniquindio.android.electiva.elvozarron.R;
 import com.uniquindio.android.electiva.elvozarron.util.AdaptadorDeParticipante;
+import com.uniquindio.android.electiva.elvozarron.vo.Entrenador;
 import com.uniquindio.android.electiva.elvozarron.vo.Participante;
 
 import java.util.ArrayList;
@@ -19,10 +20,12 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class VotacionFragment extends Fragment {
+
     /**
-     * Atributo participantes del fragmento ListaDeParticipanteFragment
+     * Atributo participantes del fragmento ParticipanteFragment
      */
     private ArrayList<Participante> participantes;
+
 
     /**
      * Atributo adaptador del fragmento ListaDeParticipanteFragment
@@ -34,20 +37,38 @@ public class VotacionFragment extends Fragment {
      */
     private RecyclerView recyclerView;
 
-
+    /**
+     * Contructor po defecto
+     */
     public VotacionFragment() {
         // Required empty public constructor
-        participantes = new ArrayList<>();
-       // participantes.add(new Participante("1", "Stiven Ospina", 21, "Estudiante", "Con sueños de ser el mejor cantante", "https://www.youtube.com/watch?v=kffacxfA7G4"));
-
     }
 
 
+    /**
+     * Metodo Callback del fragmento
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.votacion_fragment, container, false);
+        View view = inflater.inflate(R.layout.votacion_fragment, container, false);
+
+        //Obtengo la lista de Entrenadores con sus participantes
+        Bundle bundle = getArguments();
+        ArrayList<Entrenador> entrenadores = bundle.getParcelableArrayList("ENTRENADORES");
+
+        for (Entrenador e : entrenadores) {
+            for (Participante p : e.getParticipantes()) {
+                participantes.add(p);
+            }
+        }
+
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerVotacion);
         adaptador = new AdaptadorDeParticipante(participantes);
         recyclerView.setAdapter(adaptador);
@@ -55,5 +76,4 @@ public class VotacionFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         return view;
     }
-
 }

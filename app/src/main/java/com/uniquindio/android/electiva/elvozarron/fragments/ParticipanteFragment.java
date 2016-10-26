@@ -66,7 +66,6 @@ public class ParticipanteFragment extends Fragment {
         ArrayList<Entrenador> entrenadores = bundle.getParcelableArrayList("ENTRENADORES");
 
         for (Entrenador e : entrenadores) {
-
             for (Participante p : e.getParticipantes()) {
                 participantes.add(p);
             }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,7 +111,6 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
 
         Bundle bundle = getArguments();
         entrenadores = bundle.getParcelableArrayList("ENTRENADORES");
-
         tilCedula = (TextInputLayout) view.findViewById(R.id.til_cedula);
         tilNombre = (TextInputLayout) view.findViewById(R.id.til_nombre);
         tilEdad = (TextInputLayout) view.findViewById(R.id.til_edad);
@@ -185,39 +185,22 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
         String tipo = tilTipo.getEditText().getText().toString();
         String url = tilUrl.getEditText().getText().toString();
 
-        //boolean a = esCedulaValido(cedula);
-        //boolean b = esNombreValido(nombre);
-        // boolean c = esEdadValido(edad);
-        // boolean d = esTipoValido(tipo);
-        // boolean e = esUrlValido(url);
+        boolean a = esCedulaValido(cedula);
+        boolean b = esNombreValido(nombre);
+        boolean c = esEdadValido(edad);
+        boolean d = esTipoValido(tipo);
+        //  boolean e = esUrlValido(url);
 
-
-        //if (a && b && c && d && e) {
-        Participante participante = new Participante(cedula, nombre, Integer.parseInt(edad), tipo, url);
-        participante.setEntrenador(entrenadores.get(posicion));
-        entrenadores.get(posicion).agregarParticipante(participante);
-        Toast.makeText(getContext(), "Participante Registrado", Toast.LENGTH_LONG).show();
-
-
-    }
-
-    /**
-     * Este metodo permite validar si una URL es correcta
-     *
-     * @param url
-     * @return true si es valido, false de lo contrario
-     */
-    private boolean esUrlValido(String url) {
-        String regex = "^(https?://)?(([\\w!~*'().&=+$%-]+: )?[\\w!~*'().&=+$%-]+@)?(([0-9]{1,3}\\.){3}[0-9]{1,3}|([\\w!~*'()-]+\\.)*([\\w^-][\\w-]{0,61})?[\\w]\\.[a-z]{2,6})(:[0-9]{1,4})?((/*)|(/+[\\w!~*'().;?:@&=+$,%#-]+)+/*)$";
-
-        Pattern patron = Pattern.compile(regex);
-        if (!patron.matcher(url).matches()) {
-            tilUrl.setError("URL Invalido");
-            return false;
-        } else {
-            tilUrl.setError(null);
+        if (a && b && c && d) {
+            Log.v("ENTRE", String.valueOf(posicion));
+            Participante participante = new Participante(cedula, nombre, Integer.parseInt(edad), tipo, url);
+            participante.setEntrenador(entrenadores.get(posicion));
+            if (entrenadores.get(posicion).agregarParticipante(participante)) {
+                Toast.makeText(getContext(), "Participante Registrado", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getContext(), "Ya existe un participante con este id", Toast.LENGTH_LONG).show();
+            }
         }
-        return true;
     }
 
     /**
@@ -228,9 +211,9 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
      */
 
     private boolean esCedulaValido(String cedula) {
-        Pattern patron = Pattern.compile("^[0-9]");
+        Pattern patron = Pattern.compile("[0-9]*");
         if (!patron.matcher(cedula).matches() || cedula.length() > 10) {
-            tilEdad.setError("Cedula inválido");
+            tilEdad.setError("Cedula inválida");
             return false;
         } else {
             tilCedula.setError(null);
@@ -239,13 +222,13 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
     }
 
     /**
-     * Permite validar el campo nombre, solo letras
+     * Permite validar el campo nombre, solo caracteres
      *
      * @param nombre
      * @return true si es valido, false de lo contrario
      */
     private boolean esNombreValido(String nombre) {
-        Pattern patron = Pattern.compile("^[a-zA-Z ]+$");
+        Pattern patron = Pattern.compile("^[a-zA-Z ]*$");
         if (!patron.matcher(nombre).matches() || nombre.length() > 30) {
             tilNombre.setError("Nombre inválido");
             return false;
@@ -262,9 +245,9 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
      * @return true si es valido, false de lo contrario
      */
     private boolean esEdadValido(String edad) {
-        Pattern patron = Pattern.compile("^[0-9]");
+        Pattern patron = Pattern.compile("[0-9]*");
         if (!patron.matcher(edad).matches() || Integer.parseInt(edad) > 105) {
-            tilEdad.setError("Edad inválido");
+            tilEdad.setError("Edad inválida");
             return false;
         } else {
             tilEdad.setError(null);
@@ -279,7 +262,7 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
      * @return true si es valido, false de lo contrario
      */
     private boolean esTipoValido(String tipo) {
-        Pattern patron = Pattern.compile("^[a-zA-Z ]+$");
+        Pattern patron = Pattern.compile("[a-zA-Z]*");
         if (!patron.matcher(tipo).matches() || tipo.length() > 100) {
             tilTipo.setError("Relacion inválida");
             return false;
@@ -290,7 +273,28 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
     }
 
 
+    /**
+     * Este metodo permite validar si una URL es correcta
+     *
+     * @param url
+     * @return true si es valido, false de lo contrario
+     */
+    private boolean esUrlValido(String url) {
+
+        Pattern patron = Pattern.compile("");
+        if (!patron.matcher(url).matches()) {
+            tilUrl.setError("URL Invalido");
+            return false;
+        } else {
+            tilUrl.setError(null);
+        }
+        return true;
+    }
+
+    /**
+     * Interface la cual esta implementada por la actividad Portada, para agregar un participante con ayuda de esta
+     */
     public interface OnParticipanteAgregadoListener {
-        void onParticipanteAgregado(ArrayList<Entrenador> entrenadors);
+        void onParticipanteAgregado(ArrayList<Entrenador> entrenadores);
     }
 }

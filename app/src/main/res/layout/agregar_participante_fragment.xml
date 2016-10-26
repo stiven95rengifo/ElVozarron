@@ -75,7 +75,8 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="@string/hint_nombre"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:textColor="#ffffff" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
@@ -109,7 +110,7 @@
                         android:ems="10"
                         android:hint="@string/hint_edad"
                         android:inputType="number"
-                        android:singleLine="true"
+                        android:textColor="#ffffff"
                         android:textColorHint="#ffffff" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -144,7 +145,7 @@
                         android:ems="10"
                         android:hint="@string/hint_tipo"
                         android:inputType="text"
-                        android:singleLine="true" />
+                        android:textColor="#ffffff"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
@@ -174,6 +175,7 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="@string/hint_url"
+                        android:textColor="#ffffff"
                         android:inputType="textWebEditText" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -193,38 +195,39 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"></Spinner>
-            </LinearLayout>
 
+                <!-- Bottom Bar -->
+                <LinearLayout
+                    android:id="@+id/bottom_bar"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="180dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:layout_gravity="bottom"
+                        android:id="@+id/boton_cancelar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#323030"
+                        android:text="@string/accion_cancelar"
+                        android:textColor="#ffffff" />
+
+                    <Button
+                        android:id="@+id/boton_aceptar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/colorAccent"
+                        android:text="@string/accion_aceptar"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+            </LinearLayout>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <!-- Bottom Bar -->
-    <LinearLayout
-        android:id="@+id/bottom_bar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="30dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/boton_cancelar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#323030"
-            android:text="@string/accion_cancelar"
-            android:textColor="#ffffff" />
-
-        <Button
-            android:id="@+id/boton_aceptar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@color/colorAccent"
-
-            android:text="@string/accion_aceptar"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
 </RelativeLayout>

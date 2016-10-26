@@ -66,7 +66,6 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
         entrenadores.add(new Entrenador("2", "Jhonny Rivera", "Masculino", R.drawable.rivera_lanscape, R.string.detalles_jhonny));
         entrenadores.add(new Entrenador("3", "Rihana", "Femenino", R.drawable.rihanna_lanscape, R.string.detalles_rihana));
 
-
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
@@ -93,7 +92,7 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     }
 
     /**
-     * Permite crear el navegationView
+     * Permite inflar el navigation menu en la portada
      *
      * @param menu
      * @return
@@ -105,10 +104,10 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     }
 
     /**
-     * Metodo que permite
+     * Metodo que permite obtener del menu Navegation el item seleccionado
      *
-     * @param item
-     * @return
+     * @param item un item del menu
+     * @return true si el menu esta abierto, de lo contrario false
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -167,14 +166,13 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
                 break;
 
             case R.id.menu_agregar:
-                bundle = new Bundle();
-                bundle.putParcelableArrayList("ENTRENADORES", entrenadores);
                 fragmento = new AgregarParticipanteFragment();
                 fragmento.setArguments(bundle);
                 break;
 
             case R.id.menu_votacion:
                 fragmento = new VotacionFragment();
+                fragmento.setArguments(bundle);
                 break;
         }
         if (fragmento != null) {
@@ -188,9 +186,14 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     }
 
 
+    /**
+     * Metodo que la actividad implmenta para comunicarse con el fragmento AgregarParticipanteFragment
+     *
+     * @param entrenadores
+     */
     @Override
-    public void onParticipanteAgregado(ArrayList<Entrenador> entrenadors) {
-        this.entrenadores = entrenadors;
+    public void onParticipanteAgregado(ArrayList<Entrenador> entrenadores) {
+        this.entrenadores = entrenadores;
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaccion = fragmentManager.beginTransaction();
 

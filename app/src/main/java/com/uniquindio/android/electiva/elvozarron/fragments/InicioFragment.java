@@ -28,6 +28,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
      * Atributo entrenadores del fragmento InicioFragmento
      */
     private ArrayList<Entrenador> entrenadores;
+
     /**
      * Atributo cardView1 del fragmento InicioFragment
      */
@@ -64,8 +65,10 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.inicio_fragment, container, false);
 
+        //Obtengo la lista de Entrenadores con sus participantes
         Bundle bundle = getArguments();
         entrenadores = bundle.getParcelableArrayList("ENTRENADORES");
+
         cardView1 = (CardView) view.findViewById(R.id.cardview1);
         cardView1.setOnClickListener(this);
         cardView2 = (CardView) view.findViewById(R.id.cardview2);
@@ -84,26 +87,27 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
 
         Fragment fragmento = null;
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("ENTRENADORES", entrenadores);
 
         switch (v.getId()) {
             case R.id.cardview1:
-                Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList("ENTRENADORES", entrenadores);
                 fragmento = new EntrenadorFragment();
                 fragmento.setArguments(bundle);
                 break;
 
             case R.id.cardview2:
                 fragmento = new ParticipanteFragment();
+                fragmento.setArguments(bundle);
                 break;
 
             case R.id.cardview3:
                 fragmento = new VotacionFragment();
+                fragmento.setArguments(bundle);
                 break;
         }
 
         if (fragmento != null) {
-
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction transaccion = fragmentManager.beginTransaction();
 

@@ -231,7 +231,7 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
         public void actualizarItemParticipante(Participante participante) {
             txtNombre.setText(participante.getNombre());
             edad.setText(String.valueOf(participante.getEdad()));
-            nombreEntrenador.setText("Adele");
+            nombreEntrenador.setText(participante.getEntrenador().getNombre());
             relacionU.setText(participante.getTipoParticipante());
             estado.setText(participante.isEstado() ? "Activo" : "Eliminado");
             txtNumVotacion.setText(String.valueOf(participante.getNumeroDeVotos()));
