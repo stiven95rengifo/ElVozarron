@@ -6,7 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 /**
- * Fragmento AgregarParticipanteFragmento agregar un participante
+ * Fragmento AgregarParticipanteFragmento  el cual permite agregar un participante
  *
  * @author Stiven Alejandro Rengifo Ospina
  * @author Cristian Camilo Tellez
@@ -93,6 +93,7 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
      */
     public AgregarParticipanteFragment() {
         // Required empty public constructor
+        posicion = 0;
     }
 
     /**
@@ -108,9 +109,9 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.agregar_participante_fragment, container, false);
-
         Bundle bundle = getArguments();
         entrenadores = bundle.getParcelableArrayList("ENTRENADORES");
+
         tilCedula = (TextInputLayout) view.findViewById(R.id.til_cedula);
         tilNombre = (TextInputLayout) view.findViewById(R.id.til_nombre);
         tilEdad = (TextInputLayout) view.findViewById(R.id.til_edad);
@@ -123,6 +124,7 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
         //Spinner
         String[] nombres = {entrenadores.get(0).getNombre(), entrenadores.get(1).getNombre(), entrenadores.get(2).getNombre()};
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, nombres);
+
         adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adaptador);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -142,6 +144,7 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
         btnCancelar.setOnClickListener(this);
         return view;
     }
+
 
     /**
      * Callbaks que es llamado cuando una actividad es asocidad al fragmento
@@ -170,20 +173,40 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
     @Override
     public void onClick(View v) {
         if (v.getId() == btnAceptar.getId()) {
-            validarDatos();
+
+            String cedula = tilCedula.getEditText().getText().toString();
+            String nombre = tilNombre.getEditText().getText().toString();
+            String edad = tilEdad.getEditText().getText().toString();
+            String tipo = tilTipo.getEditText().getText().toString();
+            String url = tilUrl.getEditText().getText().toString();
+
+            if (cedula.equals("") || nombre.equals("") || edad.equals("") || tipo.equals("") || url.equals("")) {
+                Toast.makeText(getContext(), "No deben existir campos vacios", Toast.LENGTH_SHORT).show();
+
+            } else {
+                validarDatos(cedula, nombre, edad, tipo, url);
+            }
+        }
+
+        if (v.getId() == btnCancelar.getId()) {
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("ENTRENADORES", entrenadores);
+
+            Fragment fragmentoInicio = new InicioFragment();
+            fragmentoInicio.setArguments(bundle);
+
+            FragmentTransaction transaccion = getFragmentManager().beginTransaction();
+            transaccion.replace(R.id.contenedor_principal, fragmentoInicio);
+            transaccion.addToBackStack(null);
+            //Hago commit a la transaccion
+            transaccion.commit();
         }
     }
 
     /**
      * Metodo que permite validar si los datos ingresados por un participante son correctos
      */
-    private void validarDatos() {
-
-        String cedula = tilCedula.getEditText().getText().toString();
-        String nombre = tilNombre.getEditText().getText().toString();
-        String edad = tilEdad.getEditText().getText().toString();
-        String tipo = tilTipo.getEditText().getText().toString();
-        String url = tilUrl.getEditText().getText().toString();
+    private void validarDatos(String cedula, String nombre, String edad, String tipo, String url) {
 
         boolean a = esCedulaValido(cedula);
         boolean b = esNombreValido(nombre);
@@ -192,7 +215,7 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
         //  boolean e = esUrlValido(url);
 
         if (a && b && c && d) {
-            Log.v("ENTRE", String.valueOf(posicion));
+
             Participante participante = new Participante(cedula, nombre, Integer.parseInt(edad), tipo, url);
             participante.setEntrenador(entrenadores.get(posicion));
             if (entrenadores.get(posicion).agregarParticipante(participante)) {
@@ -204,7 +227,7 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
     }
 
     /**
-     * Permite validar que el campo cedula solo se escriban digitos
+     * Permite validar que el campo cedula solo digitos
      *
      * @param cedula
      * @return true si es valido, false de lo contrario
@@ -229,7 +252,7 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
      */
     private boolean esNombreValido(String nombre) {
         Pattern patron = Pattern.compile("^[a-zA-Z ]*$");
-        if (!patron.matcher(nombre).matches() || nombre.length() > 30) {
+        if (!patron.matcher(nombre).matches() || nombre.length() > 50) {
             tilNombre.setError("Nombre inválido");
             return false;
         } else {

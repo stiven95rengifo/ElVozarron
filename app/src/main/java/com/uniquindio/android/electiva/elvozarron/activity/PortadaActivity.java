@@ -1,17 +1,16 @@
 package com.uniquindio.android.electiva.elvozarron.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.uniquindio.android.electiva.elvozarron.R;
@@ -26,13 +25,13 @@ import java.util.ArrayList;
 
 
 /**
- * Esta actividad contiene los atributos de l a portada como los son los cardview
+ * Actividad principal, permite contener los diferentes fragmentos de la App
  *
  * @author Stiven Alejandro Rengifo Ospina
  * @author Cristian Camilo Tellez
  * @version 1.0
  */
-public class PortadaActivity extends AppCompatActivity implements AgregarParticipanteFragment.OnParticipanteAgregadoListener {
+public class PortadaActivity extends AppCompatActivity implements AgregarParticipanteFragment.OnParticipanteAgregadoListener, NavigationView.OnNavigationItemSelectedListener {
 
     /**
      * Atributo de la actividad PortadaActivity
@@ -49,8 +48,20 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
      */
     private NavigationView navigationView;
 
+
     /**
-     * Callbasck de la actividad, para instaciar los elementos
+     * Constructor por defecto
+     */
+    public PortadaActivity() {
+        entrenadores = new ArrayList<>();
+
+        entrenadores.add(new Entrenador("1", "Adele", "Femenino", R.drawable.imagen_adele, R.string.detalles_adele));
+        entrenadores.add(new Entrenador("2", "Jhonny Rivera", "Masculino", R.drawable.imagen_andy, R.string.detalles_jhonny));
+        entrenadores.add(new Entrenador("3", "Rihana", "Femenino", R.drawable.imagen_rihana, R.string.detalles_rihana));
+    }
+
+    /**
+     * Callback de la actividad, para instaciar los elementos
      *
      * @param savedInstanceState
      */
@@ -59,52 +70,46 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
         super.onCreate(savedInstanceState);
         setContentView(R.layout.portada_activity);
 
-        agregarToolbar();
-        //Lista de entrenadores
-        entrenadores = new ArrayList<>();
-        entrenadores.add(new Entrenador("1", "Adele", "Femenino", R.drawable.adele_lanscape, R.string.detalles_adele));
-        entrenadores.add(new Entrenador("2", "Jhonny Rivera", "Masculino", R.drawable.rivera_lanscape, R.string.detalles_jhonny));
-        entrenadores.add(new Entrenador("3", "Rihana", "Femenino", R.drawable.rihanna_lanscape, R.string.detalles_rihana));
+        //Setea el toolbar a la actividad
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        ActionBar actionBar = getSupportActionBar();
+
+        //Agrego el icono el ActionBar
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        if (navigationView != null) {
-            prepararDrawer(navigationView);
-            // Seleccionar item por defecto
-            seleccionarItem(navigationView.getMenu().getItem(0));
-        }
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
-    /**
-     * Este metodo permite agreagar el toolbar a la actividad
-     */
-    private void agregarToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //Seteo el toolbar a la actividad
-        setSupportActionBar(toolbar);
-        final ActionBar actionBar = getSupportActionBar();
-
-        if (actionBar != null) {
-            // Poner ícono del drawer toggle
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }
 
     /**
-     * Permite inflar el navigation menu en la portada
+     * Permite almacenar la informacion antes de destruir la actividad por el cambio de orientacion
      *
-     * @param menu
-     * @return
+     * @param guardarEstado bundle el cual nos permite almacenar la lista de entrenadores
      */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.nav_menu, menu);
-        return true;
+    public void onSaveInstanceState(Bundle guardarEstado) {
+        guardarEstado.putParcelableArrayList("lista", entrenadores);
+        super.onSaveInstanceState(guardarEstado);
+    }
+
+
+    /**
+     * Permite recuperar la informacion al momento de crear la actividad por medio del bundle almacenado anteriormente
+     *
+     * @param estadoGuardado bundle el cual trae la informacion almacenada
+     */
+    @Override
+    protected void onRestoreInstanceState(Bundle estadoGuardado) {
+        super.onRestoreInstanceState(estadoGuardado);
+        entrenadores = estadoGuardado.getParcelableArrayList("lista");
     }
 
     /**
-     * Metodo que permite obtener del menu Navegation el item seleccionado
+     * Metodo que permite si el menu esta desplegado y el item seleccionado correspoden en el fragmento abierto este
+     * se mantiene abierto
      *
      * @param item un item del menu
      * @return true si el menu esta abierto, de lo contrario false
@@ -120,71 +125,42 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     }
 
     /**
-     * @param navigationView
-     */
-    private void prepararDrawer(NavigationView navigationView) {
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        seleccionarItem(menuItem);
-                        drawerLayout.closeDrawers();
-                        return true;
-                    }
-                });
-    }
-
-
-    /**
-     * Este metodo permite segun un item seleccionador hacer una transaccion de creacion para el fragmento
+     * Permite obtener el item seleccionado del menu y con este llamar al metodo reemplazarFragment
      *
-     * @param itemDrawer
+     * @param item del menu seleccionado
+     * @return
      */
-    private void seleccionarItem(MenuItem itemDrawer) {
-        Fragment fragmento = null;
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaccion = fragmentManager.beginTransaction();
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        item.setChecked(true);
 
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("ENTRENADORES", entrenadores);
-
-        switch (itemDrawer.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.menu_portada:
-                fragmento = new InicioFragment();
-                fragmento.setArguments(bundle);
+                reemplazarFragmento(new InicioFragment());
                 break;
 
             case R.id.menu_entrenadores:
-                fragmento = new EntrenadorFragment();
-                fragmento.setArguments(bundle);
+                reemplazarFragmento(new EntrenadorFragment());
                 break;
 
             case R.id.menu_participantes:
-                fragmento = new ParticipanteFragment();
-                fragmento.setArguments(bundle);
+                reemplazarFragmento(new ParticipanteFragment());
                 break;
 
             case R.id.menu_agregar:
-                fragmento = new AgregarParticipanteFragment();
-                fragmento.setArguments(bundle);
+                reemplazarFragmento(new AgregarParticipanteFragment());
                 break;
 
             case R.id.menu_votacion:
-                fragmento = new VotacionFragment();
-                fragmento.setArguments(bundle);
+                reemplazarFragmento(new VotacionFragment());
                 break;
         }
-        if (fragmento != null) {
-            transaccion.replace(R.id.contenedor_principal, fragmento);
-            transaccion.addToBackStack(null);
-            //Hago commit a la transaccion
-            transaccion.commit();
-        }
-        // Setea título actual
-        setTitle(itemDrawer.getTitle());
-    }
 
+        // Setea título actual
+        setTitle(item.getTitle());
+        drawerLayout.closeDrawers();
+        return true;
+    }
 
     /**
      * Metodo que la actividad implmenta para comunicarse con el fragmento AgregarParticipanteFragment
@@ -194,8 +170,8 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     @Override
     public void onParticipanteAgregado(ArrayList<Entrenador> entrenadores) {
         this.entrenadores = entrenadores;
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaccion = fragmentManager.beginTransaction();
+
+        FragmentTransaction transaccion =  getSupportFragmentManager().beginTransaction();
 
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("ENTRENADORES", entrenadores);
@@ -206,6 +182,25 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
         transaccion.addToBackStack(null);
         //Hago commit a la transaccion
         transaccion.commit();
+    }
+
+
+    /**
+     * Permite reemplazar el layout principal por un fragmento
+     *
+     * @param fragmento el cual va ser puesto encima del layout principal
+     */
+    public void reemplazarFragmento(Fragment fragmento) {
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("ENTRENADORES", entrenadores);
+        fragmento.setArguments(bundle);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.contenedor_principal, fragmento)
+                .addToBackStack(null)
+                .commit();
+
 
     }
 }

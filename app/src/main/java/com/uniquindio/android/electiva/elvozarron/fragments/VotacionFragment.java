@@ -17,7 +17,11 @@ import com.uniquindio.android.electiva.elvozarron.vo.Participante;
 import java.util.ArrayList;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragmento VotacionFragmento en este si las votaciones esta activas, permitira hacer la votacion al usuario
+ *
+ * @author Stiven Alejandro Rengifo Ospina
+ * @author Cristian Camilo Tellez
+ * @version 1.0
  */
 public class VotacionFragment extends Fragment {
 
@@ -25,7 +29,6 @@ public class VotacionFragment extends Fragment {
      * Atributo participantes del fragmento ParticipanteFragment
      */
     private ArrayList<Participante> participantes;
-
 
     /**
      * Atributo adaptador del fragmento ListaDeParticipanteFragment
@@ -38,10 +41,11 @@ public class VotacionFragment extends Fragment {
     private RecyclerView recyclerView;
 
     /**
-     * Contructor po defecto
+     * Contructor por defecto
      */
     public VotacionFragment() {
         // Required empty public constructor
+        participantes = new ArrayList<>();
     }
 
 

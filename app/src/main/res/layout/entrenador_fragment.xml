@@ -5,7 +5,6 @@
     android:background="@drawable/fondo"
     tools:context="com.uniquindio.android.electiva.elvozarron.fragments.EntrenadorFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/idReciclerView"
         android:layout_width="match_parent"

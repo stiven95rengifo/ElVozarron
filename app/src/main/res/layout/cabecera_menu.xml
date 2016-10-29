@@ -10,4 +10,5 @@
         android:layout_height="230dp"
         android:src="@drawable/menu_logo"
         android:scaleType="fitXY" />
+
 </FrameLayout>

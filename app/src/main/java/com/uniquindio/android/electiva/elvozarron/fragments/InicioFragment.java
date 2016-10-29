@@ -16,7 +16,7 @@ import com.uniquindio.android.electiva.elvozarron.vo.Entrenador;
 import java.util.ArrayList;
 
 /**
- * Fragmento InicioFragment el cual permite el menu de navegacion de laApp
+ * Fragmento  InicioFragment el cual es menu el cual permite nevegar a las principales ventanas de la App
  *
  * @author Stiven Alejandro Rengifo Ospina
  * @author Cristian Camilo Tellez
@@ -119,4 +119,5 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
         // Setear título actual
         // setTitle(itemDrawer.getTitle());
     }
+
 }
