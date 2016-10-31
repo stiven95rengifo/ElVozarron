@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.uniquindio.android.electiva.elvozarron.R;
 import com.uniquindio.android.electiva.elvozarron.util.AdaptadorDeParticipante;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
  * @author Cristian Camilo Tellez
  * @version 1.0
  */
-public class ParticipanteFragment extends Fragment implements View.OnClickListener, AdaptadorDeParticipante.OnClickVotacionParticipante {
+public class ParticipanteFragment extends Fragment implements AdaptadorDeParticipante.OnClickVotacionParticipante {
 
     /**
      * Atributo participantes del fragmento ParticipanteFragment
@@ -59,6 +60,11 @@ public class ParticipanteFragment extends Fragment implements View.OnClickListen
     private static AdaptadorDeParticipante.OnClickVotacionParticipante listenerOnClick;
 
     /**
+     * Atributo entrenadores del ParticipanteFragment
+     */
+    private ArrayList<Entrenador> entrenadores;
+
+    /**
      * Atributo listener del fragmento ParticipanteFragment
      */
     public ParticipanteFragment() {
@@ -79,10 +85,8 @@ public class ParticipanteFragment extends Fragment implements View.OnClickListen
 
         View view = inflater.inflate(R.layout.participante_fragment, container, false);
         Bundle bundle = this.getArguments();
-        ArrayList<Entrenador> entrenadores = bundle.getParcelableArrayList("ENTRENADORES");
 
-
-        //Agregamos a la lista general, todo los participantes que contienen los entrenadores
+        entrenadores = bundle.getParcelableArrayList("ENTRENADORES");
         for (Entrenador e : entrenadores) {
             for (Participante p : e.getParticipantes()) {
                 participantes.add(p);
@@ -91,27 +95,45 @@ public class ParticipanteFragment extends Fragment implements View.OnClickListen
 
         editTextBuscar = (TextInputEditText) view.findViewById(R.id.buscarParticipante);
         buscar = (ImageButton) view.findViewById(R.id.imageBuscar);
-        buscar.setOnClickListener(this);
+        buscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int cant = 0;
+                if (editTextBuscar.getText().toString().trim().equals("")) {
+                    Toast.makeText(v.getContext(), "El campo buscar no debe estar vacio", Toast.LENGTH_SHORT).show();
+                } else {
+                    for (Participante p : participantes) {
+                        if (editTextBuscar.getText().toString().contains(p.getNombre())) {
+                            cant++;
+                        }
+                    }
+
+                    if (cant == 0) {
+                        Toast.makeText(v.getContext(), "No existe un participante con ese nombre", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(v.getContext(), "Hay " + cant + " con el nombre buscado", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerParticipante);
-        adaptador = new AdaptadorDeParticipante(this, participantes);
+        adaptador = new AdaptadorDeParticipante(this, participantes, "participante");
         recyclerView.setAdapter(adaptador);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         return view;
     }
 
-    /**
-     * Metodo para buscar un participante de la lista
-     *
-     * @param v
-     */
     @Override
-    public void onClick(View v) {
+    public void onDestroyView() {
+        super.onDestroyView();
 
-        String pb = editTextBuscar.getText().toString();
+        adaptador = new AdaptadorDeParticipante(this, participantes, "participante");
+        recyclerView.setAdapter(adaptador);
 
-        for (Participante p : participantes) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
-        }
     }
 
     /**
@@ -121,8 +143,6 @@ public class ParticipanteFragment extends Fragment implements View.OnClickListen
      */
     @Override
     public void onClickVotacion(View v) {
-
-            new VotacionFallidaDialogFragment().show(getFragmentManager(), "Votacion Fallida");
-
+        new VotacionFallidaDialogFragment().show(getFragmentManager(), "Votacion Fallida");
     }
 }

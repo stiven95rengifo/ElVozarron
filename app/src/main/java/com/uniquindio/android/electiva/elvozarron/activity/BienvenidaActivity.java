@@ -2,14 +2,14 @@ package com.uniquindio.android.electiva.elvozarron.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ProgressBar;
 
 import com.uniquindio.android.electiva.elvozarron.R;
 
 /**
- * Created by Stiven on 17/10/2016.
+ * Actividad BienvenidaActivity, la cual permite mostrar una ventana de espera por 5 milisegundos
  *
  * @author Stiven Alejandro Rengifo Ospina
  * @author Cristian Camilo Tellez
@@ -17,52 +17,20 @@ import com.uniquindio.android.electiva.elvozarron.R;
  */
 public class BienvenidaActivity extends AppCompatActivity {
 
-    /**
-     * Atributo progressBar de la clase BienvenidaActivity
-     */
-    private ProgressBar progressBar;
-    /**
-     * Atributo progreso de la clase BienvenidaActivity
-     */
-    private int progreso;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bienvenida_activity);
 
-        //Inicializar atributos de la clase
-        progressBar = (ProgressBar) findViewById(R.id.idProgressBar);
-        progreso = 0;
-        iniciarProgreso(progreso);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(new Intent(BienvenidaActivity.this, PortadaActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                finish();
+            }
+        }, 5000);
     }
 
-    /**
-     * Metodo que permite animar un ProgressBar
-     *
-     * @param progreso sera lo que avance el ProgressBar
-     */
-    private void iniciarProgreso(final int progreso) {
 
-        if (progreso == 110) {
-            finish();
-            startActivity(new Intent(this,PortadaActivity.class));
-        } else {
-
-            progressBar.setProgress(progreso);
-            //Hilo el cual va ir modificando el progreso del ProgressBar
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    iniciarProgreso(progreso + 10);
-                }
-            });
-            thread.start();
-        }
-    }
 }

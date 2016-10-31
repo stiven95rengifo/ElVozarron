@@ -23,7 +23,7 @@ public class Participante implements Parcelable {
      */
     private String nombre;
 
-        /**
+    /**
      * Atributo edad de la clase Participante
      */
     private int edad;
@@ -53,6 +53,11 @@ public class Participante implements Parcelable {
     private String url;
 
     /**
+     * Atributo votacionRealizada de la clase participante
+     */
+    private String votacionRealizada;
+
+    /**
      * Atributo estado de la clase Participante
      * <p>
      * El estado puede ser True=activo, False=Eliminado
@@ -76,6 +81,7 @@ public class Participante implements Parcelable {
         this.numeroDeVotos = 0;
         this.url = url;
         this.estado = true;
+        votacionRealizada="false";
     }
 
     /**
@@ -279,6 +285,7 @@ public class Participante implements Parcelable {
         dest.writeString(url);
         dest.writeString(String.valueOf(estado));
         dest.writeParcelable(entrenador, flags);
+        dest.writeString(votacionRealizada);
     }
 
     /**
@@ -297,6 +304,7 @@ public class Participante implements Parcelable {
         url = in.readString();
         estado = in.readString().equals("true") ? true : false;
         entrenador = in.readParcelable(Entrenador.class.getClassLoader());
+        votacionRealizada=in.readString();
     }
 
     /**
@@ -324,5 +332,21 @@ public class Participante implements Parcelable {
      */
     public String retornarEstado() {
         return estado == true ? "Activo" : "Eliminado";
+    }
+
+    /**
+     * Permite sumar al numero de votos cuando sea votado el participante
+     */
+    public void votar() {
+        numeroDeVotos = getNumeroDeVotos() + 1;
+        votacionRealizada="true";
+    }
+
+    /**
+     * Metodo el cual permite obtener la si un participante ya es votado
+     * @return
+     */
+    public String getVotacionRealizada() {
+        return votacionRealizada;
     }
 }

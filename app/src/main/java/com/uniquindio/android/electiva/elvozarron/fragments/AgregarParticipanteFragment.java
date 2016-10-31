@@ -231,8 +231,19 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
             Participante participante = new Participante(cedula, nombre, Integer.parseInt(edad), tipo, url);
             participante.setEntrenador(entrenadores.get(posicion));
 
-            String mensaje = entrenadores.get(posicion).agregarParticipante(participante);
-            Toast.makeText(getContext(), mensaje, Toast.LENGTH_LONG).show();
+            if (entrenadores.get(posicion).getCantidadParticipantes() < 10) {
+                if (entrenadores.get(posicion).agregarParticipante(participante)) {
+                    Toast.makeText(getContext(), "FELICITACIONES, ya eres participante de EL VOZARRON", Toast.LENGTH_LONG).show();
+                    tilCedula.getEditText().setText("");
+                    tilNombre.getEditText().setText("");
+                    tilEdad.getEditText().setText("");
+                    tilUrl.getEditText().setText("");
+                } else {
+                    Toast.makeText(getContext(), "Ya existe un participante con la misma identificacion", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(getContext(), "El entrenador " + entrenadores.get(posicion).getNombre() + " ya cuenta con todos sus participantes", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

@@ -27,30 +27,45 @@ public class VotacionFragment extends Fragment implements AdaptadorDeParticipant
 
     /**
      * .
-     * Atributo listenerOnClick del adaptadorDeParticipante
+     * Atributo listenerOnClick del VotacionFragment
      */
     private static AdaptadorDeParticipante.OnClickVotacionParticipante listenerOnClick;
 
+
+    private static OnEstadoVotanteListener onEstadoVotanteListener;
+
+
+    public interface OnEstadoVotanteListener {
+        void onEstadoVotante(String estado);
+    }
+
+
     /**
-     * Atributo participantes del fragmento ParticipanteFragment
+     * Atributo participantes del fragmento VotacionFragment
      */
     private ArrayList<Participante> participantes;
 
     /**
-     * Atributo adaptador del fragmento ListaDeParticipanteFragment
+     * Atributo adaptador del fragmento VotacionFragment
      */
     private AdaptadorDeParticipante adaptador;
 
     /**
-     * Atributo recyclerView del fragmento ListaDeParticipanteFragment
+     * Atributo recyclerView del fragmento VotacionFragment
      */
     private RecyclerView recyclerView;
+
+    /**
+     * Atributo estadoVotante del fragmento
+     */
+    private String estadoVotante;
 
     /**
      * Contructor por defecto
      */
     public VotacionFragment() {
         participantes = new ArrayList<>();
+
     }
 
 
@@ -79,11 +94,13 @@ public class VotacionFragment extends Fragment implements AdaptadorDeParticipant
         }
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerVotacion);
-        adaptador = new AdaptadorDeParticipante(this, participantes);
+        adaptador = new AdaptadorDeParticipante(this, participantes, "votacion");
+
         recyclerView.setAdapter(adaptador);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         return view;
     }
+
 
     /**
      * Metodo de la interface implementada para abrir el DialogFragment VotacionExitosaFragment

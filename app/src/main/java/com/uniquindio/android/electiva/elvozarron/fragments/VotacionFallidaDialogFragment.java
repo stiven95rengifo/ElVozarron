@@ -27,8 +27,14 @@ public class VotacionFallidaDialogFragment extends DialogFragment implements Vie
      */
     private ImageButton btnSalir;
 
-
-
+    /**
+     * Metodo Callback
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

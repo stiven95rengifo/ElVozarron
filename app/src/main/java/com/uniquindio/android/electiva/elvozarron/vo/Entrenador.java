@@ -257,18 +257,15 @@ public class Entrenador implements Parcelable {
      * @param participante
      * @return
      */
-    public String agregarParticipante(Participante participante) {
+    public boolean agregarParticipante(Participante participante) {
 
-        if (participantes.size() > 10) {
-            return "El entrenador " + getNombre() + " ya cuenta con todos sus participantes";
-        }
         for (Participante p : participantes) {
             if (p.getId().equals(participante.getId())) {
-                return "Ya existe un participante con la misma identificacion";
+                return false;
             }
         }
         participantes.add(participante);
-        return "FELICITACIONES, ya eres participante de EL VOZARRON";
+        return true;
     }
 
     /**

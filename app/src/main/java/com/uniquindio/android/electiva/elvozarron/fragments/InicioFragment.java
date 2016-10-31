@@ -48,7 +48,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
      * Constructor por defecto
      */
     public InicioFragment() {
-        // Required empty public constructor
+
     }
 
     /**

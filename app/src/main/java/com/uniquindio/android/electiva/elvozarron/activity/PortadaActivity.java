@@ -1,5 +1,6 @@
 package com.uniquindio.android.electiva.elvozarron.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -49,7 +50,9 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
      */
     private NavigationView navigationView;
 
-
+    /**
+     * Atributo bandera de la actividad principal
+     */
     private String bandera;
 
     /**
@@ -93,6 +96,8 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     @Override
     protected void onResume() {
         super.onResume();
+        Intent intent=new Intent(this,PortadaActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         if (bandera == null) {
             reemplazarFragmento(new InicioFragment());
             bandera = "true";
@@ -102,6 +107,7 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
     }
 
 
@@ -114,7 +120,7 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     public void onSaveInstanceState(Bundle guardarEstado) {
         guardarEstado.putParcelableArrayList("lista", entrenadores);
         guardarEstado.putString("bandera", bandera);
-        super.onSaveInstanceState(guardarEstado);
+             super.onSaveInstanceState(guardarEstado);
     }
 
 
@@ -128,6 +134,7 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
         super.onRestoreInstanceState(estadoGuardado);
         entrenadores = estadoGuardado.getParcelableArrayList("lista");
         bandera = estadoGuardado.getString("bandera");
+
     }
 
     /**
@@ -146,9 +153,9 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
                 reemplazarFragmento(new AgregarParticipanteFragment());
                 return true;
 
-           case android.R.id.home:
+            case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
-               return true;
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -238,4 +245,5 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
                 .addToBackStack(null)
                 .commit();
     }
+
 }

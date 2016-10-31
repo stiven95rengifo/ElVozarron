@@ -33,25 +33,26 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
      */
     private ArrayList<Participante> participantes;
 
-
-    /**
-     * Atributo listener del  AdaptadorDeParticipante
-     */
-    private static OnClickAdaptadorParticipante listener;
-
     /**
      * Atributo listenerOnClick del adaptadorDeParticipante
      */
     private static OnClickVotacionParticipante listenerOnClick;
 
     /**
+     * Atributo context del adaptadorDeParticipante
+     */
+    public static String context;
+
+
+    /**
      * Constructor del AdaptadorDeParticipante
      *
      * @param participantes lista de participantes
      */
-    public AdaptadorDeParticipante(OnClickVotacionParticipante listenerOnClick,ArrayList<Participante> participantes) {
-        this.listenerOnClick=listenerOnClick;
+    public AdaptadorDeParticipante(OnClickVotacionParticipante listenerOnClick, ArrayList<Participante> participantes, String context) {
+        this.listenerOnClick = listenerOnClick;
         this.participantes = participantes;
+        this.context = context;
 
     }
 
@@ -92,12 +93,6 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
     }
 
 
-    /**
-     * Esta interface permite compartir el evento de un fragmento con otro
-     */
-    public interface OnClickAdaptadorParticipante {
-        void onClickParticipante(int posicion);
-    }
 
     /**
      * Esta interface permite enviar la opcion de clik sobre un participante
@@ -257,6 +252,7 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
             txtNumVotacion.setText(String.valueOf(participante.getNumeroDeVotos()));
         }
 
+
         /**
          * Metodo onClick el cual permite el evento de mostrar el video de un participante
          *
@@ -264,13 +260,21 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
          */
         @Override
         public void onClick(View v) {
+
             if (v.getId() == btnUrl.getId()) {
                 v.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(participante.getUrl())));
             }
 
-            if (v.getId() == imageButton.getId()) {
+            if (v.getId() == imageButton.getId() && context.equals("votacion")) {
+                participante.votar();
+                txtNumVotacion.setText(String.valueOf(participante.getNumeroDeVotos()));
                 listenerOnClick.onClickVotacion(v);
+            } else {
+                listenerOnClick.onClickVotacion(v);
+               // Toast.makeText(v.getContext(), "Su voto ya ha sido realizado", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
+
 }
