@@ -25,13 +25,6 @@
             app:showAsAction="never" />
 
         <item
-            android:id="@+id/menu_agregar"
-            android:orderInCategory="4"
-            android:title="@string/menu_agregar"
-            android:icon="@drawable/ic_agregar"
-            app:showAsAction="never" />
-
-        <item
             android:id="@+id/menu_votacion"
             android:orderInCategory="5"
             android:title="@string/menu_votacion"

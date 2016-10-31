@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.uniquindio.android.electiva.elvozarron.R;
@@ -49,12 +50,14 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     private NavigationView navigationView;
 
 
+    private String bandera;
+
     /**
      * Constructor por defecto
      */
     public PortadaActivity() {
-        entrenadores = new ArrayList<>();
 
+        entrenadores = new ArrayList<>();
         entrenadores.add(new Entrenador("1", "Adele", "Femenino", R.drawable.imagen_adele, R.string.detalles_adele));
         entrenadores.add(new Entrenador("2", "Jhonny Rivera", "Masculino", R.drawable.imagen_andy, R.string.detalles_jhonny));
         entrenadores.add(new Entrenador("3", "Rihana", "Femenino", R.drawable.imagen_rihana, R.string.detalles_rihana));
@@ -85,6 +88,24 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
 
 
     /**
+     * Callback el cual permite mostrar la portada o menu prinicipal al usuario
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (bandera == null) {
+            reemplazarFragmento(new InicioFragment());
+            bandera = "true";
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+
+    /**
      * Permite almacenar la informacion antes de destruir la actividad por el cambio de orientacion
      *
      * @param guardarEstado bundle el cual nos permite almacenar la lista de entrenadores
@@ -92,6 +113,7 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     @Override
     public void onSaveInstanceState(Bundle guardarEstado) {
         guardarEstado.putParcelableArrayList("lista", entrenadores);
+        guardarEstado.putString("bandera", bandera);
         super.onSaveInstanceState(guardarEstado);
     }
 
@@ -105,6 +127,7 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     protected void onRestoreInstanceState(Bundle estadoGuardado) {
         super.onRestoreInstanceState(estadoGuardado);
         entrenadores = estadoGuardado.getParcelableArrayList("lista");
+        bandera = estadoGuardado.getString("bandera");
     }
 
     /**
@@ -116,10 +139,16 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
+
+            case R.id.agregarParticipante:
+                reemplazarFragmento(new AgregarParticipanteFragment());
                 return true;
+
+           case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+               return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -132,9 +161,10 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        item.setChecked(true);
 
+        item.setChecked(true);
         switch (item.getItemId()) {
+
             case R.id.menu_portada:
                 reemplazarFragmento(new InicioFragment());
                 break;
@@ -147,18 +177,25 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
                 reemplazarFragmento(new ParticipanteFragment());
                 break;
 
-            case R.id.menu_agregar:
-                reemplazarFragmento(new AgregarParticipanteFragment());
-                break;
-
             case R.id.menu_votacion:
                 reemplazarFragmento(new VotacionFragment());
                 break;
         }
-
         // Setea título actual
         setTitle(item.getTitle());
         drawerLayout.closeDrawers();
+        return true;
+    }
+
+    /**
+     * Permite inflar el overflow o mejor dicho permite mostrarlo al usuario
+     *
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_overflow, menu);
         return true;
     }
 
@@ -171,7 +208,7 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     public void onParticipanteAgregado(ArrayList<Entrenador> entrenadores) {
         this.entrenadores = entrenadores;
 
-        FragmentTransaction transaccion =  getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaccion = getSupportFragmentManager().beginTransaction();
 
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("ENTRENADORES", entrenadores);
@@ -200,7 +237,5 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
                 .replace(R.id.contenedor_principal, fragmento)
                 .addToBackStack(null)
                 .commit();
-
-
     }
 }

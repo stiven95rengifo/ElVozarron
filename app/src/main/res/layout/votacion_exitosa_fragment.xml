@@ -1,0 +1,109 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/contenedorBtnSalir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/marco"
+            android:padding="5dp">
+
+            <ImageButton
+                android:id="@+id/imagenSalir"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="#ffffff"
+                android:elevation="10dp"
+                android:src="@drawable/ic_salir" />
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/contenedorBtnSalir"
+            android:background="@color/vinotinto"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtVotacionExitosa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:elevation="10dp"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="20dp"
+                    android:text="@string/votacion_exitosa"
+                    android:textAlignment="center"
+                    android:textColor="#ffffff"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_toRightOf="@id/txtVotacionExitosa"
+                    android:src="@drawable/ic_exito" />
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txtCompartir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:padding="20dp"
+                android:text="@string/texto_compartir"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="20dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
+
+
+                <ImageButton
+                    android:id="@+id/btnTwitter"
+                    android:layout_width="90dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@+id/btnFacebook"
+                    android:background="@drawable/marco_portada"
+                    android:elevation="10dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/twiteer" />
+
+                <ImageButton
+                    android:id="@+id/btnFacebook"
+                    android:layout_width="90dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="25dp"
+                    android:background="@drawable/marco_portada"
+                    android:elevation="10dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/facebook" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

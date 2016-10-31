@@ -1,5 +1,7 @@
 package com.uniquindio.android.electiva.elvozarron.util;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +13,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.uniquindio.android.electiva.elvozarron.R;
 import com.uniquindio.android.electiva.elvozarron.vo.Participante;
@@ -39,11 +40,17 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
     private static OnClickAdaptadorParticipante listener;
 
     /**
+     * Atributo listenerOnClick del adaptadorDeParticipante
+     */
+    private static OnClickVotacionParticipante listenerOnClick;
+
+    /**
      * Constructor del AdaptadorDeParticipante
      *
      * @param participantes lista de participantes
      */
-    public AdaptadorDeParticipante(ArrayList<Participante> participantes) {
+    public AdaptadorDeParticipante(OnClickVotacionParticipante listenerOnClick,ArrayList<Participante> participantes) {
+        this.listenerOnClick=listenerOnClick;
         this.participantes = participantes;
 
     }
@@ -93,6 +100,13 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
     }
 
     /**
+     * Esta interface permite enviar la opcion de clik sobre un participante
+     */
+    public interface OnClickVotacionParticipante {
+        void onClickVotacion(View v);
+    }
+
+    /**
      * Clase AdaptadorViewHolder
      * Esta clase representa un Item de la lista de participante el cual
      * almacena las referencias de los views dentro del layout con propósitos de acceso rápido.
@@ -117,7 +131,6 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
          * Atributo txtEdad de la clase AdaptadorViewHolder
          */
         private TextView txtEdad;
-
 
         /**
          * Atributo numVotacion de la clase AdaptadorViewHolder
@@ -159,11 +172,15 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
          */
         private TextView estado;
 
-
         /**
          * Atributo btnUrl de la clase AdaptadorViewHolder
          */
         private Button btnUrl;
+
+        /**
+         * Atributo participante de la clase AdaptadorViewHolder
+         */
+        private Participante participante;
 
         /**
          * Constructor de la clase AdaptadorViewHolder
@@ -172,6 +189,7 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
          */
         public AdaptadorViewHolder(final View itemView) {
             super(itemView);
+
             imagen = (ImageView) itemView.findViewById(R.id.imagenParticipante);
             txtNombre = (TextView) itemView.findViewById(R.id.txtNombre);
             edad = (TextView) itemView.findViewById(R.id.edad);
@@ -182,6 +200,7 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
             btnUrl.setOnClickListener(this);
             txtNumVotacion = (TextView) itemView.findViewById(R.id.txtNumVotacion);
             imageButton = (ImageButton) itemView.findViewById(R.id.imageVotar);
+            imageButton.setOnClickListener(this);
             descripcion = (LinearLayout) itemView.findViewById(R.id.linearDescripcion);
             detalles = (ImageButton) itemView.findViewById(R.id.imagenExpandir);
             detalles.setOnClickListener(new View.OnClickListener() {
@@ -229,13 +248,13 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
          * @param participante el cual se agregaran sus datos al CardView
          */
         public void actualizarItemParticipante(Participante participante) {
+            this.participante = participante;
             txtNombre.setText(participante.getNombre());
             edad.setText(String.valueOf(participante.getEdad()));
             nombreEntrenador.setText(participante.getEntrenador().getNombre());
             relacionU.setText(participante.getTipoParticipante());
             estado.setText(participante.isEstado() ? "Activo" : "Eliminado");
             txtNumVotacion.setText(String.valueOf(participante.getNumeroDeVotos()));
-
         }
 
         /**
@@ -246,8 +265,11 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
         @Override
         public void onClick(View v) {
             if (v.getId() == btnUrl.getId()) {
-                Toast.makeText(v.getContext(), "Mostrar video", Toast.LENGTH_SHORT).show();
-                // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(participante.getUrl())));
+                v.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(participante.getUrl())));
+            }
+
+            if (v.getId() == imageButton.getId()) {
+                listenerOnClick.onClickVotacion(v);
             }
         }
     }

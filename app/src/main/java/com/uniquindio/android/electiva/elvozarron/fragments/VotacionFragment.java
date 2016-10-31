@@ -23,7 +23,13 @@ import java.util.ArrayList;
  * @author Cristian Camilo Tellez
  * @version 1.0
  */
-public class VotacionFragment extends Fragment {
+public class VotacionFragment extends Fragment implements AdaptadorDeParticipante.OnClickVotacionParticipante {
+
+    /**
+     * .
+     * Atributo listenerOnClick del adaptadorDeParticipante
+     */
+    private static AdaptadorDeParticipante.OnClickVotacionParticipante listenerOnClick;
 
     /**
      * Atributo participantes del fragmento ParticipanteFragment
@@ -44,7 +50,6 @@ public class VotacionFragment extends Fragment {
      * Contructor por defecto
      */
     public VotacionFragment() {
-        // Required empty public constructor
         participantes = new ArrayList<>();
     }
 
@@ -60,7 +65,7 @@ public class VotacionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.votacion_fragment, container, false);
 
         //Obtengo la lista de Entrenadores con sus participantes
@@ -74,10 +79,19 @@ public class VotacionFragment extends Fragment {
         }
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerVotacion);
-        adaptador = new AdaptadorDeParticipante(participantes);
+        adaptador = new AdaptadorDeParticipante(this, participantes);
         recyclerView.setAdapter(adaptador);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         return view;
+    }
+
+    /**
+     * Metodo de la interface implementada para abrir el DialogFragment VotacionExitosaFragment
+     *
+     * @param v
+     */
+    @Override
+    public void onClickVotacion(View v) {
+        new VotacionExitosaFragment().show(getFragmentManager(), "Votacion");
     }
 }

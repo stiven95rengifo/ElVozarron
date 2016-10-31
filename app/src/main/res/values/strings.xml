@@ -23,6 +23,13 @@
     <string name="hint_url">Url</string>
     <string name="menu_agregar">Agregar Participante</string>
     <string name="nombre_entrenador">Entrenador:</string>
+    <string name="seleccionar_entrenador">Entrenadores</string>
+    <string name="seleccionar_relacion">Relacion con la Universidad</string>
+    <string name="votacion_exitosa">Votacion Exitosa</string>
+    <string name="texto_compartir">Comparte tu voto
+    en Facebook o Twitter</string>
+    <string name="votacion_fallida">Votacion Fallida</string>
+    <string name="texto_fallido">Las votaciones se encuentran deshabilitadas</string>
 
     <string name="detalles_adele">Adele Laurie Blue Adkins (Tottenham, Inglaterra,
         5 de mayo de 1988), conocida simplemente como Adele, es una cantante y compositora
