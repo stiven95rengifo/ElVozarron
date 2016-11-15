@@ -124,7 +124,9 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
 
         //Spinner Entrenadores
         spinner = (Spinner) view.findViewById(R.id.spinner);
-        String[] nombres = {entrenadores.get(0).getNombre(), entrenadores.get(1).getNombre(), entrenadores.get(2).getNombre()};
+        String [] nombres = {String.valueOf(R.string.nombre_adele), String.valueOf(R.string.nombre_jhnonny),
+                String.valueOf(R.string.nombre_rihana)};
+
         ArrayAdapter<String> adaptadorEntrenadores = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, nombres);
         spinner.setAdapter(adaptadorEntrenadores);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -135,7 +137,7 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(getContext(), "Debe seleccionar un Entrenador", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.mensaje_alerta, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -152,7 +154,7 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(getContext(), "Debe seleccionar la relacion con la Universidad", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.mensaje_alertaU, Toast.LENGTH_SHORT).show();
             }
         });
 

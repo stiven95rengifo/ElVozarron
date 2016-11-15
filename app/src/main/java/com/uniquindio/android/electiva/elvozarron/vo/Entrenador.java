@@ -19,11 +19,11 @@ public class Entrenador implements Parcelable {
     /**
      * Atributo id de la clase Entrenador
      */
-    private String id;
+    private int id;
     /**
      * Atributo nombre de la clase Entrenador
      */
-    private String nombre;
+    private int nombre;
     /**
      * Atributo genero de la clase Entrenador
      */
@@ -56,7 +56,7 @@ public class Entrenador implements Parcelable {
      * @param nombre del entrenador
      * @param genero del entrenador
      */
-    public Entrenador(String id, String nombre, String genero, int imagen, int descripcion) {
+    public Entrenador(int id, int nombre, String genero, int imagen, int descripcion) {
         this.id = id;
         this.nombre = nombre;
         this.genero = genero;
@@ -77,7 +77,7 @@ public class Entrenador implements Parcelable {
      *
      * @return id del entrenador
      */
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -86,7 +86,7 @@ public class Entrenador implements Parcelable {
      *
      * @param id del entrenador
      */
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -95,7 +95,7 @@ public class Entrenador implements Parcelable {
      *
      * @return nombre del entrenador
      */
-    public String getNombre() {
+    public int getNombre() {
         return nombre;
     }
 
@@ -104,7 +104,7 @@ public class Entrenador implements Parcelable {
      *
      * @param nombre del entrenador
      */
-    public void setNombre(String nombre) {
+    public void setNombre(int nombre) {
         this.nombre = nombre;
     }
 
@@ -207,8 +207,8 @@ public class Entrenador implements Parcelable {
      */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(nombre);
+        dest.writeInt(id);
+        dest.writeInt(nombre);
         dest.writeString(genero);
         dest.writeString(historial);
         dest.writeInt(foto);
@@ -223,8 +223,8 @@ public class Entrenador implements Parcelable {
      * @param in Parcel con los datos a leer
      */
     public void reatToParcel(Parcel in) {
-        id = in.readString();
-        nombre = in.readString();
+        id = in.readInt();
+        nombre = in.readInt();
         genero = in.readString();
         historial = in.readString();
         foto = in.readInt();

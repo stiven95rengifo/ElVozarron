@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">The voiced</string>
+    <string name="nombreEntrenador">Name</string>
+    <string name="subTitulo">Coach</string>
+    <string name="detalles">Details</string>
+    <string name="txtCardPortada">subtitle</string>
+    <string name="menu_portada">Cover page</string>
+    <string name="menu_entrenadores">Coaches</string>
+    <string name="menu_participantes">Participants</string>
+    <string name="menu_votacion">Vote</string>
+    <string name="menu_idioma">Language</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="hint_buscarParticipante">Search Participant</string>
+    <string name="tituloParticipante">Competitor</string>
+    <string name="hint_nombre">Name</string>
+    <string name="hint_cedula">Identity card</string>
+    <string name="hint_edad">Age</string>
+    <string name="hint_tipo">Relationship with the University</string>
+    <string name="accion_aceptar">To accept</string>
+    <string name="accion_cancelar">Cancel</string>
+    <string name="elegir_entrenador">Choose Coach</string>
+    <string name="hint_url">Url</string>
+    <string name="menu_agregar">Add Participant</string>
+    <string name="nombre_entrenador">Coach:</string>
+    <string name="seleccionar_entrenador">Coaches</string>
+    <string name="seleccionar_relacion">Relationship with the University</string>
+    <string name="votacion_exitosa">Reply with quotea</string>
+    <string name="texto_compartir">Share your vote on Facebook or Twitter</string>
+    <string name="votacion_fallida">Reply with quote</string>
+    <string name="texto_fallido">Votes are disabled</string>
+
+    <string name="id_adele">1</string>
+    <string name="nombre_adele">Adele</string>
+    <string name="detalles_adele">Adele Laurie Blue Adkins (Tottenham, England, May 5, 1988),
+        known simply as Adele, is a British singer and songwriter. From a very young age he showed
+        his interest in music and in 2006 he graduated from the BRIT School of Performing Arts and
+        Technology, where he signed a contract with XL Recordings, after being discovered by demos
+        that a friend published on MySpace.</string>
+
+    <string name="id_jhonny">2</string>
+    <string name="nombre_jhnonny">Jhonny Rivera</string>
+    <string name="detalles_jhonny">JHONNY RIVERA. (Jhon Jairo Rivera Valencia) He was born in
+        Pereira-Risaralda on February 23rd, most of his life passed in the village of Pérez,
+        jurisdiction of the district of Arabia - Pereira, a region he remembers with a lot of
+        affection, since there in the field work Next to his father he made friends that will last
+        in his heart. His humble family is made up of his parents.</string>
+
+    <string name="id_rihana">3</string>
+    <string name="nombre_rihana">Rihana</string>
+    <string name="detalles_rihana">Robyn Rihanna Fenty (Bridgetown, February 20, 1988), known simply
+        as Rihanna, is a singer, actress and fashion designer Barbadian. He began his career in 2003
+        when he auditioned for music producer Evan Rogers. At the age of sixteen, Rogers, decided to
+        take her to the United States to record models. He later auditioned for Jay-Z and signed a
+        six-album contract with Def Jam Recordings.</string>
+
+    <string name="mensaje_alerta">You must select a Trainer</string>
+    <string name="mensaje_alertaU">You must select the relationship with the University</string>
+    <string name="btnVideo">Watch video</string>
+</resources>

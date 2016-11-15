@@ -93,6 +93,7 @@ public class ParticipanteFragment extends Fragment implements AdaptadorDePartici
             }
         }
 
+
         editTextBuscar = (TextInputEditText) view.findViewById(R.id.buscarParticipante);
         buscar = (ImageButton) view.findViewById(R.id.imageBuscar);
         buscar.setOnClickListener(new View.OnClickListener() {
@@ -125,16 +126,7 @@ public class ParticipanteFragment extends Fragment implements AdaptadorDePartici
         return view;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
 
-        adaptador = new AdaptadorDeParticipante(this, participantes, "participante");
-        recyclerView.setAdapter(adaptador);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-
-    }
 
     /**
      * Permite mostrar el Dialog de votacionFallida

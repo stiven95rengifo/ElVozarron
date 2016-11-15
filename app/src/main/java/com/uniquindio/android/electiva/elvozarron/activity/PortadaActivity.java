@@ -21,6 +21,7 @@ import com.uniquindio.android.electiva.elvozarron.fragments.EntrenadorFragment;
 import com.uniquindio.android.electiva.elvozarron.fragments.InicioFragment;
 import com.uniquindio.android.electiva.elvozarron.fragments.ParticipanteFragment;
 import com.uniquindio.android.electiva.elvozarron.fragments.VotacionFragment;
+import com.uniquindio.android.electiva.elvozarron.util.Utilidades;
 import com.uniquindio.android.electiva.elvozarron.vo.Entrenador;
 
 import java.util.ArrayList;
@@ -59,11 +60,10 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
      * Constructor por defecto
      */
     public PortadaActivity() {
-
         entrenadores = new ArrayList<>();
-        entrenadores.add(new Entrenador("1", "Adele", "Femenino", R.drawable.imagen_adele, R.string.detalles_adele));
-        entrenadores.add(new Entrenador("2", "Jhonny Rivera", "Masculino", R.drawable.imagen_andy, R.string.detalles_jhonny));
-        entrenadores.add(new Entrenador("3", "Rihana", "Femenino", R.drawable.imagen_rihana, R.string.detalles_rihana));
+        entrenadores.add(new Entrenador(R.string.id_adele, R.string.nombre_adele, "Femenino", R.drawable.imagen_adele, R.string.detalles_adele));
+        entrenadores.add(new Entrenador(R.string.id_jhonny, R.string.nombre_jhnonny, "Masculino", R.drawable.imagen_andy, R.string.detalles_jhonny));
+        entrenadores.add(new Entrenador(R.string.id_rihana, R.string.nombre_rihana,"Femenino", R.drawable.imagen_rihana, R.string.detalles_rihana));
     }
 
     /**
@@ -74,6 +74,7 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utilidades.obtenerLenguaje(this);
         setContentView(R.layout.portada_activity);
 
         //Setea el toolbar a la actividad
@@ -98,18 +99,12 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
         super.onResume();
         Intent intent=new Intent(this,PortadaActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
         if (bandera == null) {
             reemplazarFragmento(new InicioFragment());
             bandera = "true";
         }
     }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-    }
-
 
     /**
      * Permite almacenar la informacion antes de destruir la actividad por el cambio de orientacion
@@ -186,6 +181,13 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
 
             case R.id.menu_votacion:
                 reemplazarFragmento(new VotacionFragment());
+                break;
+
+            case R.id.menu_idioma:
+                Utilidades.cambiarIdioma(this);
+                Intent refresh= new Intent(this,PortadaActivity.class);
+                startActivity(refresh);
+                finish();
                 break;
         }
         // Setea título actual

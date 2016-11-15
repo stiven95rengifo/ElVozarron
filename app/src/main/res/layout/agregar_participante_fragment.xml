@@ -208,35 +208,37 @@
                     android:layout_marginTop="20dp"></Spinner>
             </LinearLayout>
 
+            <!-- Bottom Bar -->
+            <LinearLayout
+                android:id="@+id/bottom_bar"
+                android:paddingTop="10dp"
+                android:layout_below="@id/relativeEntrenadores"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/boton_cancelar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1"
+                    android:backgroundTint="#323030"
+                    android:text="@string/accion_cancelar"
+                    android:textColor="#ffffff" />
+
+                <Button
+                    android:id="@+id/boton_aceptar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorAccent"
+                    android:text="@string/accion_aceptar"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
-
-    <!-- Bottom Bar -->
-    <LinearLayout
-        android:id="@+id/bottom_bar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/boton_cancelar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:backgroundTint="#323030"
-            android:text="@string/accion_cancelar"
-            android:textColor="#ffffff" />
-
-        <Button
-            android:id="@+id/boton_aceptar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@color/colorAccent"
-            android:text="@string/accion_aceptar"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
 </RelativeLayout>

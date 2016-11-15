@@ -81,14 +81,27 @@
             android:paddingLeft="8dp"
             android:visibility="gone">
 
-
-            <TextView
-                android:id="@+id/edad"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:textColor="@color/vinotinto"
-                android:textSize="16sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="Edad:"
+                    android:textColor="@color/vinotinto"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/edad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -100,37 +113,65 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.1"
                     android:text="@string/nombre_entrenador"
                     android:textColor="@color/vinotinto"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:layout_weight="0.5"
                     android:id="@+id/nombreEntrenador"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
+                    android:layout_weight="0.5"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:text="Relacion con la Universidad:"
                     android:textColor="@color/vinotinto"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/relacionUniversidad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="0.7"
+                    android:textColor="#000000"
                     android:textSize="16sp" />
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/relacionUniversidad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:textColor="@color/vinotinto"
-                android:textSize="16sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/estado"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:textColor="@color/vinotinto"
-                android:textSize="16sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Estado: "
+                    android:textSize="16dp"
+                    android:textColor="@color/vinotinto"
+                    android:layout_marginRight="10dp"/>
+
+                <TextView
+                    android:id="@+id/estado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/descripcion"
@@ -143,8 +184,8 @@
             <Button
                 android:id="@+id/boton_url"
                 android:layout_width="100dp"
-                android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:backgroundTint="@color/colorAccent"
                 android:text="@string/btnVideo"
