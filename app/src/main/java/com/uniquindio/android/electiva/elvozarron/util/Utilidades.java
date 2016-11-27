@@ -62,6 +62,16 @@ public class Utilidades {
     public static final int ELIMINAR = 4;
 
     /**
+     * Atributo TWITTER_KEY de Utilidades
+     */
+    public static final String TWITTER_KEY = "T5lXqY4Dala6yrzuqBIFEmQkt";
+
+    /**
+     * Atributo TWITTER_SECRET de Utilidades
+     */
+    public static final String TWITTER_SECRET = "AXyY2l3xlUcet45En6KCv1HlanVZNYZHtvDTK5qDG55dQkBp8K";
+
+    /**
      * Permite modificar el idioma de la app
      *
      * @param context desde donde se esta llamando al metodo.

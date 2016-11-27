@@ -42,6 +42,7 @@ import java.util.ArrayList;
  */
 public class PortadaActivity extends AppCompatActivity implements AgregarParticipanteFragment.OnParticipanteAgregadoListener, NavigationView.OnNavigationItemSelectedListener, VotacionExitosaFragment.OnBotonSeleccionadoListener {
 
+
     /**
      * Atributo de la actividad PortadaActivity
      */

@@ -29,7 +29,6 @@
         <activity android:name=".activity.PortadaActivity" />
 
 
-
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
@@ -40,5 +39,8 @@
             android:name="com.facebook.FacebookContentProvider"
             android:exported="true" />
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="88b88929efd9077d740c399cf28603e660c4a77c" />
     </application>
 </manifest>

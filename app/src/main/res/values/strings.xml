@@ -77,5 +77,6 @@
     <string name="tipo_otros">Otros</string>
     <string name="participante_activo">Activo</string>
     <string name="participante_eliminado">Eliminado</string>
+    
 
 </resources>

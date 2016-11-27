@@ -19,8 +19,22 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 import com.uniquindio.android.electiva.elvozarron.R;
+import com.uniquindio.android.electiva.elvozarron.util.Utilidades;
 import com.uniquindio.android.electiva.elvozarron.vo.Participante;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Este DialogFragment permite mostra al usuario que su voto ha sido exitoso,
@@ -31,6 +45,7 @@ import com.uniquindio.android.electiva.elvozarron.vo.Participante;
  * @version 1.0
  */
 public class VotacionExitosaFragment extends DialogFragment implements View.OnClickListener {
+
 
     /**
      * Atributo callbackManager del DialogFragment
@@ -57,7 +72,12 @@ public class VotacionExitosaFragment extends DialogFragment implements View.OnCl
     /**
      * Atributo  btnTwitter del DialogFragment VotacionExitosaFragment
      */
-    private ImageButton btnTwitter;
+    private ImageButton btnCompartirTwitter;
+
+    /**
+     * Atributo btnloginTwitter del DialogFragment
+     */
+    private TwitterLoginButton btnloginTwitter;
 
     /**
      * Atributo shareDialog de facebook
@@ -75,6 +95,7 @@ public class VotacionExitosaFragment extends DialogFragment implements View.OnCl
      */
     private Participante participante;
 
+
     /**
      * Pemite mostrar el dialogFragment
      *
@@ -85,13 +106,32 @@ public class VotacionExitosaFragment extends DialogFragment implements View.OnCl
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.votacion_exitosa_fragment, new LinearLayout(getActivity()), false);
 
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(Utilidades.TWITTER_KEY, Utilidades.TWITTER_SECRET);
+        Fabric.with(super.getActivity(), new Twitter(authConfig), new TweetComposer());
+
         Bundle bundle = getArguments();
-        participante=bundle.getParcelable("key_participante");
+        participante = bundle.getParcelable("key_participante");
 
         btnFacebook = (ImageButton) view.findViewById(R.id.btnFacebook);
         btnFacebook.setOnClickListener(this);
-        //  btnTwitter = (ImageButton) view.findViewById(R.id.btnTwitter);
-        // btnTwitter.setOnClickListener(this);
+
+        btnCompartirTwitter = (ImageButton) view.findViewById(R.id.btnCompartirTwitter);
+        btnCompartirTwitter.setOnClickListener(this);
+
+        btnloginTwitter = (TwitterLoginButton) view.findViewById(R.id.twitter_login_button);
+        btnloginTwitter.setCallback(new Callback<TwitterSession>() {
+
+            @Override
+            public void success(Result<TwitterSession> result) {
+                TwitterSession session = result.data;
+                Log.i("mensaje",session.getUserName());
+            }
+
+            @Override
+            public void failure(TwitterException exception) {
+                Log.d("TwitterKit", "Login with Twitter failure", exception);
+            }
+        });
         btnSalir = (ImageButton) view.findViewById(R.id.imagenSalir);
         btnSalir.setOnClickListener(this);
 
@@ -122,6 +162,7 @@ public class VotacionExitosaFragment extends DialogFragment implements View.OnCl
         return builder;
     }
 
+
     /**
      * Callback del DialogFragment
      *
@@ -133,7 +174,9 @@ public class VotacionExitosaFragment extends DialogFragment implements View.OnCl
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+        btnloginTwitter.onActivityResult(requestCode,resultCode,data);
     }
+
 
     /**
      * Metodo CallBack del DialogFragment
@@ -143,7 +186,15 @@ public class VotacionExitosaFragment extends DialogFragment implements View.OnCl
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        //Facebook
         shareDialog = new ShareDialog(getActivity());
+
+        TwitterSession session = Twitter.getSessionManager().getActiveSession();
+        if (session != null) {
+            btnloginTwitter.setVisibility(View.INVISIBLE);
+        } else {
+            Log.i("MENSAJE", "No se inicio sesicion");
+        }
     }
 
     /**
@@ -170,6 +221,17 @@ public class VotacionExitosaFragment extends DialogFragment implements View.OnCl
                 }
                 break;
 
+            case R.id.btnCompartirTwitter:
+                try {
+                    URL url = new URL(participante.getUrl());
+                    TweetComposer.Builder builder = new TweetComposer.Builder(getContext()).
+                            text(participante.getNombre()).
+                            url(url);
+                    builder.show();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                break;
 
             case R.id.imagenSalir:
                 getDialog().dismiss();

@@ -100,7 +100,7 @@ public class ParticipanteFragment extends Fragment implements AdaptadorDePartici
         participantes = new ArrayList<>();
         //HiloSecundario hiloSecundario = new HiloSecundario(this.getContext());
         // hiloSecundario.execute(Utilidades.LISTAR);
-        Participante participante = new Participante("1", "stiven rengifo", 21, "Estudiante", 1, "www.youtube.com");
+        Participante participante = new Participante("1", "stiven rengifo", 21, "Estudiante", 1, "https://www.youtube.com/watch?v=cRzc1PVehlg");
         participantes.add(participante);
 
 
@@ -161,7 +161,9 @@ public class ParticipanteFragment extends Fragment implements AdaptadorDePartici
             votacionExitosaFragment.setArguments(bundle);
             votacionExitosaFragment.show(getFragmentManager(), "key_votacion");
         } else {
-            new VotacionFallidaDialogFragment().show(getFragmentManager(), "Votacion Fallida");
+            VotacionFallidaDialogFragment votacionFallidaDialogFragment = new VotacionFallidaDialogFragment();
+            votacionFallidaDialogFragment.show(getFragmentManager(), "Votacion Fallida");
+
         }
     }
 

@@ -73,7 +73,7 @@ public class VotacionFragment extends Fragment implements AdaptadorDeParticipant
         View view = inflater.inflate(R.layout.participante_fragment, container, false);
 
         participantes = new ArrayList<>();
-        Participante participante = new Participante("1", "stiven rengifo", 21, "Estudiante", 1, "www.youtube.com");
+        Participante participante = new Participante("1", "stiven rengifo", 21, "Estudiante", 1, "https://www.youtube.com/watch?v=cRzc1PVehlg");
         participantes.add(participante);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerParticipante);
@@ -96,11 +96,14 @@ public class VotacionFragment extends Fragment implements AdaptadorDeParticipant
         if (verificarConexion(getContext())) {
             Bundle bundle = new Bundle();
             bundle.putParcelable("key_participante", participante);
+
             VotacionExitosaFragment votacionExitosaFragment = new VotacionExitosaFragment();
             votacionExitosaFragment.setArguments(bundle);
+            //votacionExitosaFragment.setStyle(VotacionExitosaFragment.STYLE_NO_TITLE,R.style.MiDialogo);
             votacionExitosaFragment.show(getFragmentManager(), "key_votacion");
         } else {
-            new VotacionFallidaDialogFragment().show(getFragmentManager(), "Votacion Fallida");
+            VotacionFallidaDialogFragment votacionFallidaDialogFragment= new VotacionFallidaDialogFragment();
+            votacionFallidaDialogFragment.show(getFragmentManager(), "Votacion Fallida");
         }
     }
 
