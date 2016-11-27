@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- TODO: Update blank fragment layout -->
+
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
@@ -211,7 +211,8 @@
             <!-- Bottom Bar -->
             <LinearLayout
                 android:id="@+id/bottom_bar"
-                android:paddingTop="10dp"
+                android:paddingTop="2dp"
+                android:layout_marginTop="30dp"
                 android:layout_below="@id/relativeEntrenadores"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"

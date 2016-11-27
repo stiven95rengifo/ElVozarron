@@ -3,8 +3,6 @@ package com.uniquindio.android.electiva.elvozarron.vo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-
 /**
  * Created by Stiven on 17/10/2016.
  * Clase que contiene los atributos del Entrenador
@@ -28,10 +26,7 @@ public class Entrenador implements Parcelable {
      * Atributo genero de la clase Entrenador
      */
     private String genero;
-    /**
-     * Atributo historial de la clase Entrenador
-     */
-    private String historial;
+
     /**
      * Atributo foto de la clase Entrenador
      */
@@ -42,12 +37,6 @@ public class Entrenador implements Parcelable {
      */
     private int descripcion;
 
-    /**
-     * Atributo parcipantes
-     * de la
-     * clase Entrenador
-     */
-    private ArrayList<Participante> participantes;
 
     /**
      * Constructor de la clase
@@ -62,12 +51,10 @@ public class Entrenador implements Parcelable {
         this.genero = genero;
         this.foto = imagen;
         this.descripcion = descripcion;
-        participantes = new ArrayList<>();
     }
 
 
     protected Entrenador(Parcel in) {
-        participantes = new ArrayList<>();
         reatToParcel(in);
     }
 
@@ -127,24 +114,6 @@ public class Entrenador implements Parcelable {
     }
 
     /**
-     * Metodo que permite obtener el historial del Entrenador
-     *
-     * @return historial del entrenador
-     */
-    public String getHistorial() {
-        return historial;
-    }
-
-    /**
-     * Metodo que permite moficiar el historial del Entrenador
-     *
-     * @param historial del entrenador
-     */
-    public void setHistorial(String historial) {
-        this.historial = historial;
-    }
-
-    /**
      * Metodo que permite obtener la descripcion del Entrenador
      *
      * @return descripcion del entrenador
@@ -172,24 +141,6 @@ public class Entrenador implements Parcelable {
     }
 
     /**
-     * Metodo que permite obtener la lista de participantes del Entrenador
-     *
-     * @return lista de participantes del entrenador
-     */
-    public ArrayList<Participante> getParticipantes() {
-        return participantes;
-    }
-
-    /**
-     * Metodo que permite modificar la lista de participantes del Entrenador
-     *
-     * @param participantes lista de participantes del entrenador
-     */
-    public void setParticipantes(ArrayList<Participante> participantes) {
-        this.participantes = participantes;
-    }
-
-    /**
      * * Se usa cuando existen parcelables hijos
      *
      * @return un entero
@@ -210,10 +161,8 @@ public class Entrenador implements Parcelable {
         dest.writeInt(id);
         dest.writeInt(nombre);
         dest.writeString(genero);
-        dest.writeString(historial);
         dest.writeInt(foto);
         dest.writeInt(descripcion);
-        dest.writeTypedList(participantes);
     }
 
     /**
@@ -226,10 +175,8 @@ public class Entrenador implements Parcelable {
         id = in.readInt();
         nombre = in.readInt();
         genero = in.readString();
-        historial = in.readString();
         foto = in.readInt();
         descripcion = in.readInt();
-        in.readTypedList(participantes, Participante.CREATOR);
     }
 
 
@@ -251,30 +198,22 @@ public class Entrenador implements Parcelable {
         }
     };
 
-    /**
-     * Metodo que permite agregar un participante a un entrenador
-     *
-     * @param participante
-     * @return
-     */
-    public boolean agregarParticipante(Participante participante) {
+//    /**
+//     * Metodo que permite agregar un participante a un entrenador
+//     *
+//     * @param participante
+//     * @return
+//     */
+//    public boolean agregarParticipante(Participante participante) {
+//
+//        for (Participante p : participantes) {
+//            if (p.getId().equals(participante.getId())) {
+//                return false;
+//            }
+//        }
+//        participantes.add(participante);
+//        return true;
+//    }
 
-        for (Participante p : participantes) {
-            if (p.getId().equals(participante.getId())) {
-                return false;
-            }
-        }
-        participantes.add(participante);
-        return true;
-    }
-
-    /**
-     * Permite obtener el numero de participantes que contiene el entrenador
-     *
-     * @return el tamaño de la lista participantes
-     */
-    public int getCantidadParticipantes() {
-        return participantes.size();
-    }
 
 }

@@ -67,7 +67,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 
         //Obtengo la lista de Entrenadores con sus participantes
         Bundle bundle = getArguments();
-        entrenadores = bundle.getParcelableArrayList("ENTRENADORES");
+        entrenadores = bundle.getParcelableArrayList("key_entrenadores");
 
         cardView1 = (CardView) view.findViewById(R.id.cardview1);
         cardView1.setOnClickListener(this);
@@ -87,8 +87,9 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
 
         Fragment fragmento = null;
+
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("ENTRENADORES", entrenadores);
+        bundle.putParcelableArrayList("key_entrenadores", entrenadores);
 
         switch (v.getId()) {
             case R.id.cardview1:
@@ -108,6 +109,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
         }
 
         if (fragmento != null) {
+
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction transaccion = fragmentManager.beginTransaction();
 
@@ -116,8 +118,8 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
             //Hago commit a la transaccion
             transaccion.commit();
         }
-        // Setear título actual
-        // setTitle(itemDrawer.getTitle());
+        // Falta modificar estos titulos Setear título actual
+
     }
 
 }

@@ -61,4 +61,19 @@
     <string name="mensaje_alerta">Debe seleccionar un Entrenador</string>
     <string name="mensaje_alertaU">Debe seleccionar la relacion con la Universidad</string>
     <string name="btnVideo">Ver Video</string>
+
+    <string name="mensaje_conexion_internet"> El dispositivo NO esta conectado a internet, desea activar la conexion ?</string>
+    <string name="titulo_advertencia">Advertencia</string>
+    <string name="cancelar_conexion">Cancelar</string>
+    <string name="aceptar_conexion">Aceptar</string>
+    <string name="login_facebook">Ingresa con Facebook</string>
+    <string name="mensaje1">No deben existir campos vacios</string>
+    <string name="tipo_estudiante">Estudiante</string>
+    <string name="tipo_profesor">Profesor</string>
+    <string name="tipo_administrativo">Administrativo</string>
+    <string name="tipo_otros">Otros</string>
+    <string name="mensaje_felicitaciones">FELICITACIONES, ya eres participante de EL VOZARRON</string>
+    <string name="participante_activo">Activo</string>
+    <string name="participante_eliminado">Eliminado</string>
+
 </resources>

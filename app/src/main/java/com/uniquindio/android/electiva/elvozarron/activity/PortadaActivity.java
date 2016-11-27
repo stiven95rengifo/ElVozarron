@@ -15,14 +15,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+import com.facebook.Profile;
+import com.facebook.login.widget.LoginButton;
 import com.uniquindio.android.electiva.elvozarron.R;
 import com.uniquindio.android.electiva.elvozarron.fragments.AgregarParticipanteFragment;
 import com.uniquindio.android.electiva.elvozarron.fragments.EntrenadorFragment;
 import com.uniquindio.android.electiva.elvozarron.fragments.InicioFragment;
 import com.uniquindio.android.electiva.elvozarron.fragments.ParticipanteFragment;
+import com.uniquindio.android.electiva.elvozarron.fragments.VotacionExitosaFragment;
 import com.uniquindio.android.electiva.elvozarron.fragments.VotacionFragment;
 import com.uniquindio.android.electiva.elvozarron.util.Utilidades;
 import com.uniquindio.android.electiva.elvozarron.vo.Entrenador;
+import com.uniquindio.android.electiva.elvozarron.vo.Participante;
 
 import java.util.ArrayList;
 
@@ -34,7 +40,7 @@ import java.util.ArrayList;
  * @author Cristian Camilo Tellez
  * @version 1.0
  */
-public class PortadaActivity extends AppCompatActivity implements AgregarParticipanteFragment.OnParticipanteAgregadoListener, NavigationView.OnNavigationItemSelectedListener {
+public class PortadaActivity extends AppCompatActivity implements AgregarParticipanteFragment.OnParticipanteAgregadoListener, NavigationView.OnNavigationItemSelectedListener, VotacionExitosaFragment.OnBotonSeleccionadoListener {
 
     /**
      * Atributo de la actividad PortadaActivity
@@ -57,14 +63,17 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     private String bandera;
 
     /**
+     * Atributo callbackManager de la actividad principal
+     */
+    private CallbackManager callbackManager;
+
+
+    /**
      * Constructor por defecto
      */
     public PortadaActivity() {
-        entrenadores = new ArrayList<>();
-        entrenadores.add(new Entrenador(R.string.id_adele, R.string.nombre_adele, "Femenino", R.drawable.imagen_adele, R.string.detalles_adele));
-        entrenadores.add(new Entrenador(R.string.id_jhonny, R.string.nombre_jhnonny, "Masculino", R.drawable.imagen_andy, R.string.detalles_jhonny));
-        entrenadores.add(new Entrenador(R.string.id_rihana, R.string.nombre_rihana,"Femenino", R.drawable.imagen_rihana, R.string.detalles_rihana));
-    }
+
+     }
 
     /**
      * Callback de la actividad, para instaciar los elementos
@@ -76,6 +85,13 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
         super.onCreate(savedInstanceState);
         Utilidades.obtenerLenguaje(this);
         setContentView(R.layout.portada_activity);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
+        //Lista de entrenadores de la aplicacion.
+        entrenadores = new ArrayList<>();
+        entrenadores.add(new Entrenador(R.string.id_adele, R.string.nombre_adele, "Femenino", R.drawable.imagen_adele, R.string.detalles_adele));
+        entrenadores.add(new Entrenador(R.string.id_jhonny, R.string.nombre_jhnonny, "Masculino", R.drawable.imagen_andy, R.string.detalles_jhonny));
+        entrenadores.add(new Entrenador(R.string.id_rihana, R.string.nombre_rihana, "Femenino", R.drawable.imagen_rihana, R.string.detalles_rihana));
 
         //Setea el toolbar a la actividad
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
@@ -88,8 +104,57 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
+
+//    /**
+//     * Metodo callback de la actividad PortadaActivity
+//     */
+//    @Override
+//    protected void onPostResume() {
+//        super.onPostResume();
+//
+//        if (!verificarConexion(this)) {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setMessage(R.string.mensaje_conexion_internet)
+//                    .setTitle(R.string.titulo_advertencia)
+//                    .setCancelable(false)
+//                    .setNegativeButton(R.string.cancelar_conexion,
+//                            new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int id) {
+//                                    dialog.cancel();
+//                                    finish();
+//                                }
+//                            })
+//                    .setPositiveButton(R.string.aceptar_conexion, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//
+//                            startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+//                        }
+//                    });
+//            AlertDialog alert = builder.create();
+//            alert.show();
+//        }
+//    }
+//
+//    /**
+//     * Metodo que permite verificar la conexion a internet del dispositivo
+//     *
+//     * @param context
+//     * @return true si el dispositivo esta conectado, de lo contrario false.
+//     */
+//    public static boolean verificarConexion(Context context) {
+//        ConnectivityManager cm =
+//                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+//
+//        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+//
+//        if (netInfo != null && netInfo.isConnected()) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     /**
      * Callback el cual permite mostrar la portada o menu prinicipal al usuario
@@ -97,11 +162,17 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     @Override
     protected void onResume() {
         super.onResume();
-        Intent intent=new Intent(this,PortadaActivity.class);
+        Intent intent = new Intent(this, PortadaActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         if (bandera == null) {
-            reemplazarFragmento(new InicioFragment());
+
+            Fragment fragmento = new InicioFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("key_entrenadores", entrenadores);
+            fragmento.setArguments(bundle);
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_principal, fragmento).commit();
             bandera = "true";
         }
     }
@@ -113,9 +184,9 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
      */
     @Override
     public void onSaveInstanceState(Bundle guardarEstado) {
-        guardarEstado.putParcelableArrayList("lista", entrenadores);
-        guardarEstado.putString("bandera", bandera);
-             super.onSaveInstanceState(guardarEstado);
+        guardarEstado.putParcelableArrayList("key_lista", entrenadores);
+        guardarEstado.putString("key_bandera", bandera);
+        super.onSaveInstanceState(guardarEstado);
     }
 
 
@@ -127,8 +198,8 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     @Override
     protected void onRestoreInstanceState(Bundle estadoGuardado) {
         super.onRestoreInstanceState(estadoGuardado);
-        entrenadores = estadoGuardado.getParcelableArrayList("lista");
-        bandera = estadoGuardado.getString("bandera");
+        entrenadores = estadoGuardado.getParcelableArrayList("key_lista");
+        bandera = estadoGuardado.getString("key_bandera");
 
     }
 
@@ -185,7 +256,7 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
 
             case R.id.menu_idioma:
                 Utilidades.cambiarIdioma(this);
-                Intent refresh= new Intent(this,PortadaActivity.class);
+                Intent refresh = new Intent(this, PortadaActivity.class);
                 startActivity(refresh);
                 finish();
                 break;
@@ -211,21 +282,21 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     /**
      * Metodo que la actividad implmenta para comunicarse con el fragmento AgregarParticipanteFragment
      *
-     * @param entrenadores
+     * @param participante
      */
     @Override
-    public void onParticipanteAgregado(ArrayList<Entrenador> entrenadores) {
-        this.entrenadores = entrenadores;
+    public void onParticipanteAgregado(Participante participante) {
 
         FragmentTransaction transaccion = getSupportFragmentManager().beginTransaction();
 
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("ENTRENADORES", entrenadores);
+        bundle.putParcelable("key_participante", participante);
+
         Fragment fragmento = new ParticipanteFragment();
         fragmento.setArguments(bundle);
-
         transaccion.replace(R.id.contenedor_principal, fragmento);
         transaccion.addToBackStack(null);
+
         //Hago commit a la transaccion
         transaccion.commit();
     }
@@ -239,7 +310,7 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     public void reemplazarFragmento(Fragment fragmento) {
 
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("ENTRENADORES", entrenadores);
+        bundle.putParcelableArrayList("key_entrenadores", entrenadores);
         fragmento.setArguments(bundle);
 
         getSupportFragmentManager().beginTransaction()
@@ -248,4 +319,28 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
                 .commit();
     }
 
+    /**
+     * Permite obtener el evento del boton seleccionado, ya sea el botn de facebook o Twitter
+     *
+     * @param v la vista, o boton el cual fue presionado
+     */
+    @Override
+    public void onBotonSeleccionado(LoginButton v) {
+        final LoginButton btnFacebook = v;
+    }
+
+
+    private void obtenerDatosUsuarioFacebook(Profile perfil) {
+
+        if (perfil != null) {
+            String nombre = perfil.getName();
+        }
+    }
+
+
+
+
+    public void setEntrenadores(ArrayList<Entrenador> entrenadores) {
+        this.entrenadores = entrenadores;
+    }
 }

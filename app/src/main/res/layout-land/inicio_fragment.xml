@@ -43,14 +43,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/idImagePortada"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
                     android:text="@string/menu_entrenadores"
                     android:textAlignment="textEnd"
                     android:textColor="#ffffff"
                     android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
@@ -82,14 +82,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/idImagePortada1"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
                     android:text="@string/menu_participantes"
                     android:textAlignment="textEnd"
                     android:textColor="#ffffff"
                     android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
@@ -121,14 +121,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/idImagePortada2"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
                     android:text="@string/menu_votacion"
                     android:textAlignment="textEnd"
                     android:textColor="#ffffff"
                     android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>

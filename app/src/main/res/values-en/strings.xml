@@ -58,4 +58,20 @@
     <string name="mensaje_alerta">You must select a Trainer</string>
     <string name="mensaje_alertaU">You must select the relationship with the University</string>
     <string name="btnVideo">Watch video</string>
+
+
+    <string name="mensaje_conexion_internet"> The device is NOT connected to the internet, do you want to activate the connection?</string>
+    <string name="titulo_advertencia">Warninga</string>
+    <string name="cancelar_conexion">Cancel</string>
+    <string name="aceptar_conexion">Accept</string>
+    <string name="login_facebook">Login in With Facebook</string>
+    <string name="mensaje1">There should be no empty fields</string>
+
+    <string name="tipo_estudiante">Student</string>
+    <string name="tipo_profesor">Teacher</string>
+    <string name="tipo_administrativo">Administrative</string>
+    <string name="tipo_otros">Others</string>
+    <string name="mensaje_felicitaciones">CONGRATULATIONS, you are already a participant in EL VOZARRON</string>
+    <string name="participante_activo">Active</string>
+    <string name="participante_eliminado">Removed</string>
 </resources>

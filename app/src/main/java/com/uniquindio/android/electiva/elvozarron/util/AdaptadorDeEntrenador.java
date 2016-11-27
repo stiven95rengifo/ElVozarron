@@ -35,10 +35,8 @@ public class AdaptadorDeEntrenador extends RecyclerView.Adapter<AdaptadorDeEntre
      */
     public AdaptadorDeEntrenador(ArrayList<Entrenador>entrenadores) {
         this.entrenadores = entrenadores;
-        //entrenadores.add(new Entrenador("1", "Adele", "Femenino", R.drawable.adele_lanscape, R.string.detalles_adele));
-        //entrenadores.add(new Entrenador("2", "Jhonny Rivera", "Masculino", R.drawable.rivera_lanscape, R.string.detalles_jhonny));
-        //entrenadores.add(new Entrenador("3", "Rihana", "Femenino", R.drawable.rihanna_lanscape, R.string.detalles_rihana));
-    }
+     }
+
 
     /**
      * Este metodo infla el contenido de un nuevo ítem para la lista.

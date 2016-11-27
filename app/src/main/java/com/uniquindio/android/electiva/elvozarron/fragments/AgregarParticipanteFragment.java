@@ -3,7 +3,6 @@ package com.uniquindio.android.electiva.elvozarron.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -11,7 +10,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.URLUtil;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -98,7 +96,7 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
      * Contructor del fragmento
      */
     public AgregarParticipanteFragment() {
-        posicion = 0;
+
     }
 
     /**
@@ -114,20 +112,43 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.agregar_participante_fragment, container, false);
-        Bundle bundle = getArguments();
-        entrenadores = bundle.getParcelableArrayList("ENTRENADORES");
+        posicion = 0;
 
+        //Lista de entrenadores de la aplicacion
+        Bundle bundle = getArguments();
+        entrenadores = bundle.getParcelableArrayList("key_entrenadores");
+
+        //Inicializo las variables
         tilCedula = (TextInputLayout) view.findViewById(R.id.til_cedula);
         tilNombre = (TextInputLayout) view.findViewById(R.id.til_nombre);
         tilEdad = (TextInputLayout) view.findViewById(R.id.til_edad);
         tilUrl = (TextInputLayout) view.findViewById(R.id.til_url);
 
-        //Spinner Entrenadores
-        spinner = (Spinner) view.findViewById(R.id.spinner);
-        String [] nombres = {String.valueOf(R.string.nombre_adele), String.valueOf(R.string.nombre_jhnonny),
-                String.valueOf(R.string.nombre_rihana)};
+        //Permite inicializar los spinner
+        inicializarSpinner(view);
 
-        ArrayAdapter<String> adaptadorEntrenadores = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, nombres);
+        //Botones
+        btnAceptar = (Button) view.findViewById(R.id.boton_aceptar);
+        btnAceptar.setOnClickListener(this);
+        btnCancelar = (Button) view.findViewById(R.id.boton_cancelar);
+        btnCancelar.setOnClickListener(this);
+        return view;
+    }
+
+
+    /**
+     * Permite inicializar y mostrar el spinner en el fragmento
+     *
+     * @param view vista la cual va ser donde se mostraran los spinne
+     */
+    private void inicializarSpinner(View view) {
+
+        //Spinner nombre de los entrenadores
+        spinner = (Spinner) view.findViewById(R.id.spinner);
+
+        ArrayAdapter<CharSequence> adaptadorEntrenadores = ArrayAdapter.createFromResource(getContext(),
+                R.array.nombre_entrenadores, android.R.layout.simple_spinner_item);
+
         spinner.setAdapter(adaptadorEntrenadores);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -141,10 +162,11 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
             }
         });
 
-        //Spinner Relaciones
+        //Spinner de relaciones con la Universidad
         spinnerRelacion = (Spinner) view.findViewById(R.id.spinnerRelacion);
-        ArrayAdapter<CharSequence> adaptadorRelaciones = ArrayAdapter.createFromResource(getContext(), R.array.relaciones,
-                android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adaptadorRelaciones = ArrayAdapter.createFromResource(getContext(),
+                R.array.relaciones, android.R.layout.simple_spinner_item);
+
         spinnerRelacion.setAdapter(adaptadorRelaciones);
         spinnerRelacion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -157,13 +179,6 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
                 Toast.makeText(getContext(), R.string.mensaje_alertaU, Toast.LENGTH_SHORT).show();
             }
         });
-
-        //Botones
-        btnAceptar = (Button) view.findViewById(R.id.boton_aceptar);
-        btnAceptar.setOnClickListener(this);
-        btnCancelar = (Button) view.findViewById(R.id.boton_cancelar);
-        btnCancelar.setOnClickListener(this);
-        return view;
     }
 
 
@@ -193,18 +208,18 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
      */
     @Override
     public void onClick(View v) {
+
         if (v.getId() == btnAceptar.getId()) {
 
-            String cedula = tilCedula.getEditText().getText().toString();
-            String nombre = tilNombre.getEditText().getText().toString();
-            String edad = tilEdad.getEditText().getText().toString();
-            String url = tilUrl.getEditText().getText().toString();
+            if (tilCedula.getEditText().getText().toString().equals("") ||
+                    tilNombre.getEditText().getText().toString().equals("") ||
+                    tilEdad.getEditText().getText().toString().equals("") ||
+                    tilUrl.getEditText().getText().toString().equals("")) {
 
-            if (cedula.equals("") || nombre.equals("") || edad.equals("") || url.equals("")) {
-                Toast.makeText(getContext(), "No deben existir campos vacios", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.mensaje1, Toast.LENGTH_SHORT).show();
 
             } else {
-                validarDatos(cedula, nombre, edad, relacion, url);
+                agregarParticipante();
             }
         }
 
@@ -224,28 +239,23 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
     }
 
     /**
-     * Metodo que permite validar si los datos ingresados por un participante son correctos
+     * Permite validar si los datos ingresados por un participante son correctos
      */
-    private void validarDatos(String cedula, String nombre, String edad, String tipo, String url) {
+    private void agregarParticipante() {
 
-        if (esCedulaValido(cedula) && esNombreValido(nombre) && esEdadValido(edad) && esUrlValido(url)) {
+        if (esCedulaValido(tilCedula.getEditText().getText().toString())
+                && esNombreValido(tilNombre.getEditText().getText().toString())
+                && esEdadValido(tilEdad.getEditText().getText().toString())) {
 
-            Participante participante = new Participante(cedula, nombre, Integer.parseInt(edad), tipo, url);
-            participante.setEntrenador(entrenadores.get(posicion));
 
-            if (entrenadores.get(posicion).getCantidadParticipantes() < 10) {
-                if (entrenadores.get(posicion).agregarParticipante(participante)) {
-                    Toast.makeText(getContext(), "FELICITACIONES, ya eres participante de EL VOZARRON", Toast.LENGTH_LONG).show();
-                    tilCedula.getEditText().setText("");
-                    tilNombre.getEditText().setText("");
-                    tilEdad.getEditText().setText("");
-                    tilUrl.getEditText().setText("");
-                } else {
-                    Toast.makeText(getContext(), "Ya existe un participante con la misma identificacion", Toast.LENGTH_LONG).show();
-                }
-            } else {
-                Toast.makeText(getContext(), "El entrenador " + entrenadores.get(posicion).getNombre() + " ya cuenta con todos sus participantes", Toast.LENGTH_SHORT).show();
-            }
+            Participante participante = new Participante(tilCedula.getEditText().getText().toString(),
+                    tilNombre.getEditText().getText().toString(), Integer.parseInt(tilEdad.getEditText().getText().toString()),
+                    relacion, entrenadores.get(posicion).getId(), tilUrl.getEditText().getText().toString());
+
+
+            Toast.makeText(getContext(), "FELICITACIONES, ya eres participante de EL VOZARRON", Toast.LENGTH_LONG).show();
+
+
         }
     }
 
@@ -308,23 +318,23 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
      * @param url
      * @return true si es valido, false de lo contrario
      */
-    private boolean esUrlValido(String url) {
-        if (URLUtil.isValidUrl(url)) {
-            Uri uri = Uri.parse(url);
-            if (url.startsWith("https://m.youtube.com/") || url.startsWith("https://www.youtube.com/")) {
-                tilUrl.setError(null);
-                return true;
-            }
-        }
-        tilUrl.setError("URL Invalido");
-        return false;
-    }
+//    private boolean esUrlValido(String url) {
+//        if (URLUtil.isValidUrl(url)) {
+//            Uri uri = Uri.parse(url);
+//            if (url.startsWith("https://m.youtube.com/") || url.startsWith("https://www.youtube.com/")) {
+//                tilUrl.setError(null);
+//                return true;
+//            }
+//        }
+//        tilUrl.setError("URL Invalido");
+//        return false;
+//    }
 
 
     /**
      * Interface la cual esta implementada por la actividad Portada, para agregar un participante con ayuda de esta
      */
     public interface OnParticipanteAgregadoListener {
-        void onParticipanteAgregado(ArrayList<Entrenador> entrenadores);
+        void onParticipanteAgregado(Participante participante);
     }
 }

@@ -37,6 +37,31 @@ public class Utilidades {
     public final static String LENGUAJE_EN = "en";
 
     /**
+     * Atributo URL_SERVICIO_EN de la clase Utilidades
+     */
+    public final static String URL_SERVICIO = "http://localhost:3000/api/participantes"; //10.0.2.2
+
+    /**
+     * Atributo LISTAR_EN de la clase Utilidades
+     */
+    public static final int LISTAR = 1;
+
+    /**
+     * Atributo AGREGAR de la clase Utilidades
+     */
+    public static final int AGREGAR= 2;
+
+    /**
+     * Atributo MODIFICAR  de la clase Utilidades
+     */
+    public static final int MODIFICAR = 3;
+
+    /**
+     * Atributo ELIMINAR de la clase Utilidades
+     */
+    public static final int ELIMINAR = 4;
+
+    /**
      * Permite modificar el idioma de la app
      *
      * @param context desde donde se esta llamando al metodo.
@@ -77,4 +102,24 @@ public class Utilidades {
         config.locale = locale;
         context.getApplicationContext().getResources().updateConfiguration(config, null);
     }
+
+
+//    public static void getKeyHash(Context context) {
+//        try {
+//            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNATURES);
+//            for (Signature signature : info.signatures) {
+//                MessageDigest md = MessageDigest.getInstance("SHA");
+//                md.update(signature.toByteArray());
+//                String sign = Base64.encodeToString(md.digest(), Base64.DEFAULT);
+//                Log.e("Mi clave HASH:", sign);
+//            }
+//        } catch (PackageManager.NameNotFoundException e) {
+//            Log.d("prueba", "1 KeyHash Error: " + e.getMessage());
+//        } catch (NoSuchAlgorithmException e) {
+//            Log.d("prueba", "2 KeyHash Error: " + e.getMessage());
+//        }
+//    }
+
+
+
 }

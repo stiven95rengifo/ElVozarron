@@ -35,10 +35,15 @@ public class EntrenadorFragment extends Fragment {
     private AdaptadorDeEntrenador adaptadorDeEntrenador;
 
     /**
+     * Atributo entrenadores del Framento EntrenadorFragment
+     */
+    private ArrayList<Entrenador> entrenadores;
+
+    /**
      * Contructor por defecto
      */
     public EntrenadorFragment() {
-        // Required empty public constructor
+
     }
 
     /**
@@ -54,15 +59,16 @@ public class EntrenadorFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.entrenador_fragment, container, false);
+
+        //Lista de entrenadores de la aplicacion.
+        Bundle bundle = getArguments();
+        entrenadores=bundle.getParcelableArrayList("key_entrenadores");
+
         recyclerView = (RecyclerView) view.findViewById(R.id.idReciclerView);
         recyclerView.setHasFixedSize(true);
-
-        Bundle bundle = getArguments();
-        ArrayList<Entrenador> entrenadores = bundle.getParcelableArrayList("ENTRENADORES");
         adaptadorDeEntrenador = new AdaptadorDeEntrenador(entrenadores);
         recyclerView.setAdapter(adaptadorDeEntrenador);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         return view;
     }
-
 }

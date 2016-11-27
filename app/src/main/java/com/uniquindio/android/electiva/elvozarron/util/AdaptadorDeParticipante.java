@@ -1,6 +1,9 @@
 package com.uniquindio.android.electiva.elvozarron.util;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -49,11 +52,9 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
      *
      * @param participantes lista de participantes
      */
-    public AdaptadorDeParticipante(OnClickVotacionParticipante listenerOnClick, ArrayList<Participante> participantes, String context) {
+    public AdaptadorDeParticipante(OnClickVotacionParticipante listenerOnClick, ArrayList<Participante> participantes) {
         this.listenerOnClick = listenerOnClick;
         this.participantes = participantes;
-        this.context = context;
-
     }
 
     /**
@@ -98,7 +99,7 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
      * Esta interface permite enviar la opcion de clik sobre un participante
      */
     public interface OnClickVotacionParticipante {
-        void onClickVotacion(View v);
+        void onClickVotacion(Participante participante);
     }
 
     /**
@@ -246,7 +247,7 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
             this.participante = participante;
             txtNombre.setText(participante.getNombre());
             edad.setText(String.valueOf(participante.getEdad()));
-            nombreEntrenador.setText(participante.getEntrenador().getNombre());
+            //nombreEntrenador.setText(participante.getEntrenador().getNombre());
             relacionU.setText(participante.getTipoParticipante());
             estado.setText(participante.isEstado() ? "Activo" : "Eliminado");
             txtNumVotacion.setText(String.valueOf(participante.getNumeroDeVotos()));
@@ -265,16 +266,32 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
                 v.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(participante.getUrl())));
             }
 
-            if (v.getId() == imageButton.getId() && context.equals("votacion")) {
-                participante.votar();
-                txtNumVotacion.setText(String.valueOf(participante.getNumeroDeVotos()));
-                listenerOnClick.onClickVotacion(v);
-            } else {
-                listenerOnClick.onClickVotacion(v);
-               // Toast.makeText(v.getContext(), "Su voto ya ha sido realizado", Toast.LENGTH_SHORT).show();
+            if (v.getId() == imageButton.getId()) {
+
+                if(verificarConexion(v.getContext())) {
+                    participante.votar();
+                    txtNumVotacion.setText(String.valueOf(participante.getNumeroDeVotos()));
+                }
+                listenerOnClick.onClickVotacion(participante);
             }
         }
+
+        /**
+         * Metodo que permite verificar la conexion a internet del dispositivo
+         *
+         * @param context
+         * @return true si el dispositivo esta conectado, de lo contrario false.
+         */
+        public static boolean verificarConexion(Context context) {
+            ConnectivityManager cm =
+                    (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+            if (netInfo != null && netInfo.isConnected()) {
+                return true;
+            }
+            return false;
+        }
     }
-
-
 }

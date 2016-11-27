@@ -31,7 +31,7 @@ public class Participante implements Parcelable {
     /**
      * Atributo entrenador de la clase Participante
      */
-    private Entrenador entrenador;
+    private int entrenador;
 
     /**
      * Atributo foto de la clase Entrenador
@@ -52,10 +52,6 @@ public class Participante implements Parcelable {
      */
     private String url;
 
-    /**
-     * Atributo votacionRealizada de la clase participante
-     */
-    private String votacionRealizada;
 
     /**
      * Atributo estado de la clase Participante
@@ -63,6 +59,8 @@ public class Participante implements Parcelable {
      * El estado puede ser True=activo, False=Eliminado
      */
     private boolean estado;
+
+
 
     /**
      * Constructor de la clase Participante
@@ -73,7 +71,7 @@ public class Participante implements Parcelable {
      * @param tipoParticipante la relacion se hace con la universidad, puede ser estudiante, profesor, administrativo, otros
      * @param url              video en youtube de la persona cantando
      */
-    public Participante(String id, String nombre, int edad, String tipoParticipante, String url) {
+    public Participante(String id, String nombre, int edad, String tipoParticipante, int entrenador, String url) {
         this.id = id;
         this.nombre = nombre;
         this.edad = edad;
@@ -81,7 +79,7 @@ public class Participante implements Parcelable {
         this.numeroDeVotos = 0;
         this.url = url;
         this.estado = true;
-        votacionRealizada="false";
+        this.entrenador = entrenador;
     }
 
     /**
@@ -173,7 +171,7 @@ public class Participante implements Parcelable {
      *
      * @return entrenador relacionado con el  participante
      */
-    public Entrenador getEntrenador() {
+    public Integer getEntrenador() {
         return entrenador;
     }
 
@@ -182,7 +180,7 @@ public class Participante implements Parcelable {
      *
      * @param entrenador relacionado con el  participante
      */
-    public void setEntrenador(Entrenador entrenador) {
+    public void setEntrenador(int entrenador) {
         this.entrenador = entrenador;
     }
 
@@ -284,8 +282,7 @@ public class Participante implements Parcelable {
         dest.writeInt(numeroDeVotos);
         dest.writeString(url);
         dest.writeString(String.valueOf(estado));
-        dest.writeParcelable(entrenador, flags);
-        dest.writeString(votacionRealizada);
+        dest.writeInt(entrenador);
     }
 
     /**
@@ -303,8 +300,7 @@ public class Participante implements Parcelable {
         numeroDeVotos = in.readInt();
         url = in.readString();
         estado = in.readString().equals("true") ? true : false;
-        entrenador = in.readParcelable(Entrenador.class.getClassLoader());
-        votacionRealizada=in.readString();
+        entrenador = in.readInt();
     }
 
     /**
@@ -339,14 +335,6 @@ public class Participante implements Parcelable {
      */
     public void votar() {
         numeroDeVotos = getNumeroDeVotos() + 1;
-        votacionRealizada="true";
-    }
 
-    /**
-     * Metodo el cual permite obtener la si un participante ya es votado
-     * @return
-     */
-    public String getVotacionRealizada() {
-        return votacionRealizada;
     }
 }

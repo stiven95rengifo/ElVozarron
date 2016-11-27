@@ -13,14 +13,14 @@ import android.widget.LinearLayout;
 import com.uniquindio.android.electiva.elvozarron.R;
 
 /**
- * Este DialogFragment permite mostra al usuario que su voto  no sera posible, ya que las
+ * Este DialogFragment permite mostrar al usuario que su voto  no sera posible, ya que las
  * votaciones estan cerradas
  *
  * @author Stiven Alejandro Rengifo Ospina
  * @author Cristian Camilo Tellez
  * @version 1.0
  */
-public class VotacionFallidaDialogFragment extends DialogFragment implements View.OnClickListener {
+public class VotacionFallidaDialogFragment extends DialogFragment {
 
     /**
      * Atributo  btnSalir del DialogFragment VotacionFallidaDialogFragment
@@ -52,24 +52,14 @@ public class VotacionFallidaDialogFragment extends DialogFragment implements Vie
         View view = getActivity().getLayoutInflater().inflate(R.layout.votacion_fallida_dialog, new LinearLayout(getActivity()), false);
 
         btnSalir = (ImageButton) view.findViewById(R.id.imagenSalir);
-        btnSalir.setOnClickListener(this);
+        btnSalir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDialog().dismiss();
+            }
+        });
         Dialog builder = new Dialog(getActivity());
         builder.setContentView(view);
         return builder;
-    }
-
-    /**
-     * Permite realizar el evento segun el id del boton
-     *
-     * @param v vista la cual se va producir el evento
-     */
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.imagenSalir:
-                getDialog().dismiss();
-                break;
-
-        }
     }
 }
