@@ -209,8 +209,8 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
     @Override
     public void onClick(View v) {
 
+        //Boton el cual permite agregar un participante
         if (v.getId() == btnAceptar.getId()) {
-
             if (tilCedula.getEditText().getText().toString().equals("") ||
                     tilNombre.getEditText().getText().toString().equals("") ||
                     tilEdad.getEditText().getText().toString().equals("") ||
@@ -247,15 +247,12 @@ public class AgregarParticipanteFragment extends Fragment implements View.OnClic
                 && esNombreValido(tilNombre.getEditText().getText().toString())
                 && esEdadValido(tilEdad.getEditText().getText().toString())) {
 
-
             Participante participante = new Participante(tilCedula.getEditText().getText().toString(),
                     tilNombre.getEditText().getText().toString(), Integer.parseInt(tilEdad.getEditText().getText().toString()),
                     relacion, entrenadores.get(posicion).getId(), tilUrl.getEditText().getText().toString());
 
-
-            Toast.makeText(getContext(), "FELICITACIONES, ya eres participante de EL VOZARRON", Toast.LENGTH_LONG).show();
-
-
+            Toast.makeText(getContext(), R.string.mensaje_felicitaciones, Toast.LENGTH_LONG).show();
+            listener.onParticipanteAgregado(participante);
         }
     }
 

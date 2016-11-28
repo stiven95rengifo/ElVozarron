@@ -73,11 +73,13 @@ public class VotacionFragment extends Fragment implements AdaptadorDeParticipant
         View view = inflater.inflate(R.layout.participante_fragment, container, false);
 
         participantes = new ArrayList<>();
-        Participante participante = new Participante("1", "stiven rengifo", 21, "Estudiante", 1, "https://www.youtube.com/watch?v=cRzc1PVehlg");
-        participantes.add(participante);
+        Bundle bundle = getArguments();
+
+//        Participante participante = new Participante("1", "stiven rengifo", 21, "Estudiante", 1, "https://www.youtube.com/watch?v=cRzc1PVehlg");
+//        participantes.add(participante);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerParticipante);
-        adaptador = new AdaptadorDeParticipante(this, participantes);
+        adaptador = new AdaptadorDeParticipante(this, (ArrayList)bundle.getParcelableArrayList("key_participantes"));
 
         recyclerView.setAdapter(adaptador);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));

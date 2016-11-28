@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 
+import com.google.gson.Gson;
+import com.uniquindio.android.electiva.elvozarron.vo.Participante;
+
 import java.util.Locale;
 
 /**
@@ -49,7 +52,7 @@ public class Utilidades {
     /**
      * Atributo AGREGAR de la clase Utilidades
      */
-    public static final int AGREGAR= 2;
+    public static final int AGREGAR = 2;
 
     /**
      * Atributo MODIFICAR  de la clase Utilidades
@@ -131,5 +134,27 @@ public class Utilidades {
 //    }
 
 
+    /**
+     * Permite obtener los datos del servicio que estan e formato Json y convertirlo en participante
+     *
+     * @param jsonParticipante
+     * @return
+     */
+    public static Participante convertirJSONAParticipante(String jsonParticipante) {
+        Gson gson = new Gson();
+        return gson.fromJson(jsonParticipante, Participante.class);
 
+    }
+
+    /**
+     * Metodo que permite  convertir un participante a JSON para subirlo al servicio
+     *
+     * @param participante
+     * @return
+     */
+    public static String convertirParticipanteAJSON(Participante participante) {
+        Gson gson = new Gson();
+        String json = gson.toJson(participante);
+        return json;
+    }
 }

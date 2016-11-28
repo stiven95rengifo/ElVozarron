@@ -95,51 +95,12 @@ public class ParticipanteFragment extends Fragment implements AdaptadorDePartici
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.participante_fragment, container, false);
-        Log.i("ENTRO", "OnActivityCreated");
-
         participantes = new ArrayList<>();
-        //HiloSecundario hiloSecundario = new HiloSecundario(this.getContext());
-        // hiloSecundario.execute(Utilidades.LISTAR);
-        Participante participante = new Participante("1", "stiven rengifo", 21, "Estudiante", 1, "https://www.youtube.com/watch?v=cRzc1PVehlg");
-        participantes.add(participante);
 
-
-//        Bundle bundle = this.getArguments();
-//
-//
-//        Participante participante = (Participante) bundle.getParcelable("key_participante");
-//        participantes.add(participante);
-//        Log.i("participante", participante.getNombre());
-//        Log.i("participante", participante.getId());
-
-//
-//        editTextBuscar = (TextInputEditText) view.findViewById(R.id.buscarParticipante);
-//        buscar = (ImageButton) view.findViewById(R.id.imageBuscar);
-//        buscar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                int cant = 0;
-//                if (editTextBuscar.getText().toString().trim().equals("")) {
-//                    Toast.makeText(v.getContext(), "El campo buscar no debe estar vacio", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    for (Participante p : participantes) {
-//                        if (editTextBuscar.getText().toString().contains(p.getNombre())) {
-//                            cant++;
-//                        }
-//                    }
-//
-//                    if (cant == 0) {
-//                        Toast.makeText(v.getContext(), "No existe un participante con ese nombre", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        Toast.makeText(v.getContext(), "Hay " + cant + " con el nombre buscado", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            }
-//        });
-//
+        Bundle bundle = this.getArguments();
+//        participantes = bundle.getParcelableArrayList("key_participantes");
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerParticipante);
-        adaptador = new AdaptadorDeParticipante(this, participantes);
+        adaptador = new AdaptadorDeParticipante(this, (ArrayList) bundle.getParcelableArrayList("key_participantes"));
         recyclerView.setAdapter(adaptador);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         return view;

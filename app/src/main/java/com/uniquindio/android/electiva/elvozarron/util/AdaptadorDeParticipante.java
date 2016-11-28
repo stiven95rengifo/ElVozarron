@@ -247,6 +247,10 @@ public class AdaptadorDeParticipante extends RecyclerView.Adapter<AdaptadorDePar
             this.participante = participante;
             txtNombre.setText(participante.getNombre());
             edad.setText(String.valueOf(participante.getEdad()));
+            if(participante.getEntrenador()==1){
+
+            }
+
             //nombreEntrenador.setText(participante.getEntrenador().getNombre());
             relacionU.setText(participante.getTipoParticipante());
             estado.setText(participante.isEstado() ? "Activo" : "Eliminado");

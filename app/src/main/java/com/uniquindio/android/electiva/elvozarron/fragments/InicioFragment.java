@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.uniquindio.android.electiva.elvozarron.R;
 import com.uniquindio.android.electiva.elvozarron.vo.Entrenador;
+import com.uniquindio.android.electiva.elvozarron.vo.Participante;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,11 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
      * Atributo entrenadores del fragmento InicioFragmento
      */
     private ArrayList<Entrenador> entrenadores;
+
+    /**
+     * Atributo participantes del fragmento InicioFragmento
+     */
+    private ArrayList<Participante> participantes;
 
     /**
      * Atributo cardView1 del fragmento InicioFragment
@@ -68,6 +74,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
         //Obtengo la lista de Entrenadores con sus participantes
         Bundle bundle = getArguments();
         entrenadores = bundle.getParcelableArrayList("key_entrenadores");
+        participantes= bundle.getParcelableArrayList("key_participantes");
 
         cardView1 = (CardView) view.findViewById(R.id.cardview1);
         cardView1.setOnClickListener(this);
@@ -90,6 +97,7 @@ public class InicioFragment extends Fragment implements View.OnClickListener {
 
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("key_entrenadores", entrenadores);
+        bundle.putParcelableArrayList("key_participantes",participantes);
 
         switch (v.getId()) {
             case R.id.cardview1:

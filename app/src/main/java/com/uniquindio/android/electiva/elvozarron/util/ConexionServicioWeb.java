@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.methods.HttpGet;
+import cz.msebera.android.httpclient.client.methods.HttpPost;
+import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.impl.client.HttpClientBuilder;
 import cz.msebera.android.httpclient.util.EntityUtils;
 
@@ -32,7 +34,7 @@ public class ConexionServicioWeb {
      */
     public static ArrayList<Participante> getListaDeParticipantes() {
 
-        Log.i("ENTRO", "getlistadeparticipantes");
+
 
         ArrayList<Participante> participantes = new ArrayList();
 
@@ -75,5 +77,30 @@ public class ConexionServicioWeb {
         }
 
         return participantes;
+    }
+
+
+    public static Participante agregarParticipanteAlServicio(String jsonPersonaje) {
+
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpPost post = new HttpPost(Utilidades.URL_SERVICIO);
+        post.setHeader("content-type", "application/json");
+        Log.v("json", "json "+jsonPersonaje);
+
+        Participante participante = null;
+
+        try {
+            StringEntity entity = new StringEntity(jsonPersonaje);
+            post.setEntity(entity);
+            HttpResponse respose = httpClient.execute(post);
+            String resp = EntityUtils.toString(respose.getEntity());
+            participante = Utilidades.convertirJSONAParticipante(resp);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("ServicioRest", "Error! insercion de personaje " + e.getMessage());
+            return null;
+        }
+        return participante;
     }
 }

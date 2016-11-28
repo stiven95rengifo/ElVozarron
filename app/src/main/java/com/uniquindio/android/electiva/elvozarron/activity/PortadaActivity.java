@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -48,6 +47,12 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
      */
     private ArrayList<Entrenador> entrenadores;
 
+
+    /**
+     * Atribut de la actividad PortadaActivity
+     */
+    private ArrayList<Participante> participantes;
+
     /**
      * Atributo DraweLayout de la actividad PortadaActivity
      */
@@ -68,13 +73,12 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
      */
     private CallbackManager callbackManager;
 
-
     /**
      * Constructor por defecto
      */
     public PortadaActivity() {
 
-     }
+    }
 
     /**
      * Callback de la actividad, para instaciar los elementos
@@ -90,6 +94,7 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
 
         //Lista de entrenadores de la aplicacion.
         entrenadores = new ArrayList<>();
+        participantes = new ArrayList<>();
         entrenadores.add(new Entrenador(R.string.id_adele, R.string.nombre_adele, "Femenino", R.drawable.imagen_adele, R.string.detalles_adele));
         entrenadores.add(new Entrenador(R.string.id_jhonny, R.string.nombre_jhnonny, "Masculino", R.drawable.imagen_andy, R.string.detalles_jhonny));
         entrenadores.add(new Entrenador(R.string.id_rihana, R.string.nombre_rihana, "Femenino", R.drawable.imagen_rihana, R.string.detalles_rihana));
@@ -105,7 +110,6 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
     }
 
 
@@ -186,6 +190,7 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     @Override
     public void onSaveInstanceState(Bundle guardarEstado) {
         guardarEstado.putParcelableArrayList("key_lista", entrenadores);
+        guardarEstado.putParcelableArrayList("key_participantes", participantes);
         guardarEstado.putString("key_bandera", bandera);
         super.onSaveInstanceState(guardarEstado);
     }
@@ -199,6 +204,7 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
     @Override
     protected void onRestoreInstanceState(Bundle estadoGuardado) {
         super.onRestoreInstanceState(estadoGuardado);
+        participantes = estadoGuardado.getParcelableArrayList("key_participantes");
         entrenadores = estadoGuardado.getParcelableArrayList("key_lista");
         bandera = estadoGuardado.getString("key_bandera");
 
@@ -287,21 +293,8 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
      */
     @Override
     public void onParticipanteAgregado(Participante participante) {
-
-        FragmentTransaction transaccion = getSupportFragmentManager().beginTransaction();
-
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("key_participante", participante);
-
-        Fragment fragmento = new ParticipanteFragment();
-        fragmento.setArguments(bundle);
-        transaccion.replace(R.id.contenedor_principal, fragmento);
-        transaccion.addToBackStack(null);
-
-        //Hago commit a la transaccion
-        transaccion.commit();
+        participantes.add(participante);
     }
-
 
     /**
      * Permite reemplazar el layout principal por un fragmento
@@ -312,6 +305,7 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
 
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("key_entrenadores", entrenadores);
+        bundle.putParcelableArrayList("key_participantes", participantes);
         fragmento.setArguments(bundle);
 
         getSupportFragmentManager().beginTransaction()
@@ -337,8 +331,6 @@ public class PortadaActivity extends AppCompatActivity implements AgregarPartici
             String nombre = perfil.getName();
         }
     }
-
-
 
 
     public void setEntrenadores(ArrayList<Entrenador> entrenadores) {
